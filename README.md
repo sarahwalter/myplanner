@@ -3,7 +3,8 @@ Site: https://myplanner-osu.herokuapp.com/
 
 Dev Environment
 Your local environment will be where you create branches and do all of your dev work.
-##Initial Setup
+
+#Initial Setup
 1. Make sure you have git installed on your computer. If you don't you can grab the latest version here: https://git-scm.com/downloads
 2. Pick an appropriate location on your computer to work from and clone this repo into that directory using the following command:
 	git clone https://github.com/myplanner/myplanner.git
@@ -16,7 +17,7 @@ Your local environment will be where you create branches and do all of your dev 
 	This will install dependencies in the bower.json file
 6. Your local repository should now be fully set up to work with the remote repo
 
-##Development
+#Development
 A good rule of thumb to follow is to create a new, descriptive branch title to work from in your local repo whenever you are working on a new feature (avoiding arbitrary numbers and dates). For example, if you're working on a daily view for the calendar, you can name your branch "calendar_daily-view". To work on a new branch:
 NOTE: Always create a new branch off of master, not any branches you've created.
 1. Enter the following command: git checkout -b <branch name>
