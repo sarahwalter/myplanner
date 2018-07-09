@@ -1,7 +1,8 @@
-# myplanner
+# MyPlanner Dev Setup
 Site: https://myplanner-osu.herokuapp.com/
 
 Dev Environment
+
 Your local environment will be where you create branches and do all of your dev work.
 
 ## Initial Setup
@@ -17,10 +18,24 @@ Your local environment will be where you create branches and do all of your dev 
 	This will install dependencies in the bower.json file
 6. Your local repository should now be fully set up to work with the remote repo
 
+## Local Database
+You'll probably want to set up a local database so you can test your changes and retrieve information as you create new features. In order to do this, follow these steps:
+
+1. Install MySQL on your local machine. You can visit their site here for the appropriate download for your OS: https://dev.mysql.com/downloads/mysql/
+2. You will also want to download a software that gives you graphical access to MySQL. This will make any development you do much faster and easier. Common tools are MySQL Workbench and SQLyog Community Edition.
+3. Set up a connection to the MySQL service on your local machine using the credentials you configured at installation (localhost for server, root for user unless you set up a different one, and any password you may have set up - otherwise that may be left blank).
+4. Create a database and call it something easy to remember such as 'myplanner-test'
+5. In the SQL directory of the project you will find a SQL file for table creation. Copy all the code in this file and paste it into your query window and run all the commands at once (in SQLyog there is a "Run All" command). This will create every table for the database.
+6. Another SQL file exists with dummy information if you want some pre-populated information, follow the same process as the previous step for getting this information inserted into the database.
+7. Back into your project section, you will see a dbcon.js file. This file exports the database connection settings for Node to use. change the host, username, password, and database to match your local credentials.
+8. Your local environment should now be completely set up and ready to go.
+
 ## Development
 A good rule of thumb to follow is to create a new, descriptive branch title to work from in your local repo whenever you are working on a new feature (avoiding arbitrary numbers and dates). For example, if you're working on a daily view for the calendar, you can name your branch "calendar_daily-view". To work on a new branch:
 
 **NOTE:** Always create a new branch off of __master__, not any branches you've created.
+
+**DBCON.JS** Never push this file from your local repo to GitHub. This is specifically configured to operate with the ClearDB addon in Heroku so any changes to this file will cause this connection to be severed.
 1. Enter the following command: git checkout -b \<branch name>
 
 	This will create a new branch and automatically switch you to it. It's a bad idea to work directly on the master branch since pushing to the master branch in GitHub will automatically update the Heroku app and potentially crash it while others may be using it for testing.
