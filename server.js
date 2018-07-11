@@ -16,7 +16,9 @@ app.route('/').get(function(req,res) {
 
 //CALENDAR EVENT CALLS
 app.delete('/calendar_events:event_id', calendar_events.deleteEvent);
-app.get('/calendar_events/:user_id', calendar_events.eventInfo);
+app.get('/calendar_events/:event_id', calendar_events.eventInfoPerEvent);
+app.get('/calendar_events/:user_id', calendar_events.eventInfoPerUser);
+app.patch('/calendar_events/:event_id', calendar_events.updateEvent);
 app.post('/calendar_events', calendar_events.createEvent);
 
 //USER CALLS
