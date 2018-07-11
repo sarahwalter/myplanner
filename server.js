@@ -1,22 +1,26 @@
-//This code courtesy of: https://medium.com/@hellotunmbi/how-to-deploy-angular-application-to-heroku-1d56e09c5147
+//Partial assist from: https://medium.com/@hellotunmbi/how-to-deploy-angular-application-to-heroku-1d56e09c5147
 //Install express server
 const express = require('express');
 const path = require('path');
+const app = express();
+const appPort = (process.env.PORT || 8080);
+app.use(express.static(__dirname + '/app')); //Serve only the static files form the dist directory
+
+//API files
 const calendar_events = require('./api/calendar_events.js');
 const users = require('./api/users.js');
-const app = express();
-var appPort = (process.env.PORT || 8080);
-
-// Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/app'));
 
 app.route('/').get(function(req,res) {
     res.sendFile(path.join(__dirname+'/app/index.html'));
 });
 
-app.get('/users', users.userInfo);
+//CALENDAR EVENT CALLS
+app.delete('/calendar_events:event_id', calendar_events.deleteEvent);
+app.get('/calendar_events/:user_id', calendar_events.eventInfo);
+app.post('/calendar_events', calendar_events.createEvent);
 
-app.get('/calendar_events', calendar_events.rules);
+//USER CALLS
+app.get('/users/:user_id', users.userInfo);
 
 // Start the app by listening on the default Heroku port
 app.listen(appPort);

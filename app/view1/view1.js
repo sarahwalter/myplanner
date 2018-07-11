@@ -10,10 +10,10 @@ angular.module('myApp.view1', ['ngRoute'])
 }])
 
 .controller('View1Ctrl', ['$http', '$scope', function($http, $scope) {
-    $http.get('/users?user_id=1', null).then(function(response){
+    $http.get('/users/1', null).then(function(response){
         $scope.users = response.data;
     });
-    $http.get('/calendar_events?user_id=1', null).then(function(response){
+    $http.get('/calendar_events/1', null).then(function(response){
         $scope.rules = response.data;
     });
 }]);
