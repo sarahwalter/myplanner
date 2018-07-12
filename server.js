@@ -22,7 +22,10 @@ app.patch('/calendar_events/:event_id', calendar_events.updateEvent);
 app.post('/calendar_events', calendar_events.createEvent);
 
 //USER CALLS
+app.delete('/users/:user_id', users.deleteUser);
 app.get('/users/:user_id', users.userInfo);
+app.patch('users/:user_id', users.updateUser);
+app.post('users', users.createUser);
 
 // Start the app by listening on the default Heroku port
 app.listen(appPort);
