@@ -1,4 +1,5 @@
 const mysql = require('./dbcon.js');
+const error = require('./errors.js');
 
 /***************************************************
  * Name: createEvent
@@ -8,18 +9,18 @@ const mysql = require('./dbcon.js');
  **************************************************/
 exports.createEvent = function(req, res){
     //Verify that the request body exists
-    if (!req.body) { return parameterErr(res, "Missing body of request"); }
+    if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
     var e = eventInfoPrepper(req.body[0]);
 
     //Verify the minimum requirements for inserting have been met
-    if (!e.user || !e.start || !e.title) { return parameterErr(res, "Missing required fields"); }
+    if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
 
     mysql.pool.query("INSERT INTO calendar_events (user_id, start_datetime, end_datetime, title, notes, rep_stop_date,"
     + " rep_day_month, rep_day_week, event_type, amount, job_id)"
     + " VALUES (?,?,?,?,?,?,?,?,?,?,?)",
     [e.user, e.start, e.end, e.title, e.notes, e.stop_date, e.day_month, e.day_week, e.event_type, e.amount, e.job_id], function(err){
-        if (err) { return sqlErr(res, err); }
+        if (err) { return error.sqlErr(res, err); }
         else { return res.status(201).send("Event Created"); }
     });
 };
@@ -32,10 +33,10 @@ exports.createEvent = function(req, res){
 exports.deleteEvent = function(req, res){
     var event_id = (req.body[0].event_id) ? req.body[0].event_id : null;
 
-    if (!event_id) { return res.status(400).send("Missing event_id"); }
+    if (!event_id) { return error.parameterErr(res, "Missing event_id parameter"); }
 
     mysql.pool.query("DELETE FROM calendar_events WHERE event_id=?", [event_id], function(err){
-        if (err) { return sqlErr(res, err); }
+        if (err) { return error.sqlErr(res, err); }
         else { return res.status(204).send(); }
     });
 };
@@ -49,7 +50,7 @@ exports.deleteEvent = function(req, res){
 exports.eventInfoPerEvent = function(req, res){
     var event = req.params.event_id;
 
-    if (!event) { return res.status(400).send("Missing event_id parameter")}
+    if (!event) { return error.parameterErr(res, "Missing event_id parameter"); }
 
     mysql.pool.query("SELECT start_datetime, end_datetime, title, notes, rep_stop_date, rep_day_month, rep_day_week,"
         + " active, event_type, amount, job_id"
@@ -69,7 +70,7 @@ exports.eventInfoPerEvent = function(req, res){
 exports.eventInfoPerUser = function(req, res){
     var user = req.params.user_id;
 
-    if (!user) { return res.status(400).send("Missing user_id parameter")}
+    if (!user) { return error.parameterErr(res, "Missing user_id parameter"); }
 
     mysql.pool.query("SELECT start_datetime, end_datetime, title, notes, rep_stop_date, rep_day_month, rep_day_week,"
         + " active, event_type, amount, job_id"
@@ -87,18 +88,18 @@ exports.eventInfoPerUser = function(req, res){
  * Output: "204 No Content" if successful
  **************************************************/
 exports.updateEvent = function(req, res){
-    if (!req.body) { return parameterErr(res, "Missing body of request"); }
+    if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
     var e = eventInfoPrepper(req.body[0]);
 
     //Verify the minimum requirements for inserting have been met
-    if (!e.user || !e.start || !e.title) { return parameterErr(res, "Missing required fields"); }
+    if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
 
     mysql.pool.query("UPDATE calendar_events"
     + " SET start_datetime=?, end_datetime=?, title=?, notes=?, rep_stop_date=?, rep_day_month=?, rep_day_week=?,"
     + " event_type=?, amount=?, job_id=?",
     [e.start, e.end, e.title, e.notes, e.stop_date, e.day_month, e.day_week, e.event_type, e.amount, e.job_id], function(err){
-       if (err) { return sqlErr(res, err); }
+       if (err) { return error.sqlErr(res, err); }
        else { return res.status(204).send(); }
     });
 };
@@ -138,26 +139,5 @@ function eventInfoPrepper(body){
         amount : amount,
         job_id : job_id
     };
-}
-
-/**************************************************
- * Name: parameterErr
- * Description: Returns 400-errors with a specified
- * error message.
- * Input: The `err` parameter (user provided string)
- * and the `res` parameter for the request.
- *************************************************/
-function parameterErr(res, err){
-    return res.status(400).send(err);
-}
-
-/**************************************************
- * Name: sqlErr
- * Description: Returns MySQL error to the client.
- * Input: The `err` parameter from a MySQL query and
- * the `res` parameter for the request.
- *************************************************/
-function sqlErr(res, err){
-    return res.status(500).send("MySQL error: " + err);
 }
 
