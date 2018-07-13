@@ -44,6 +44,6 @@ var toSend = [{
               }];
              
 $http.post("/calendar_events", toSend).then(function(response){
-    $scope.someVariable = response;
+    //Do something with status code and such here
 });
 ```
