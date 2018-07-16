@@ -30,9 +30,12 @@
     $script([
       'bower_components/angular/angular.js',
       'bower_components/angular-route/angular-route.js',
+      '//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"',
       'app.js',
       'view1/view1.js',
       'view2/view2.js',
+      'register/register.js',
+      'login/login.js',
       'components/version/version.js',
       'components/version/version-directive.js',
       'components/version/interpolate-filter.js'
@@ -48,6 +51,8 @@
   <ul class="menu">
     <li><a href="#!/view1">view1</a></li>
     <li><a href="#!/view2">view2</a></li>
+    <li><a href="#!/register">register</a></li>
+    <li><a href="#!/login">login</a></li>
   </ul>
 
   <div ng-view></div>

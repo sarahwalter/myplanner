@@ -1,0 +1,36 @@
+<form name="userRegistration" ng-submit="submitForm(userRegistration.$valid)" role="form" novalidate>
+    <!-- First Name --> 
+	<div class="form-group" ng-class="{ 'has-error': userRegistration.first.$touched && userRegistration.first.$invalid }">
+		<label>First Name</label>
+		<input type="text" name="first" id="first" class="form-control" ng-model="first" required/>
+		<div class= "help-block" ng-messages="userRegistration.first.$error" ng-if= "userRegistration.first.$touched">
+			<span ng-message="required">First name is required</span>
+		</div>
+	</div>
+	<!-- Last Name --> 
+	<div class="form-group" ng-class="{ 'has-error': userRegistration.last.$touched && userRegistration.last.$invalid }">
+		<label>Last Name</label>
+		<input type="text" name="last" id="last" class="form-control" ng-model="last" required />
+		<div class= "help-block" ng-messages="userRegistration.last.$error" ng-if= "userRegistration.last.$touched">
+			<span ng-message="required">Last name is required</span>
+		</div>
+	</div>
+	<!-- Email --> 
+	<div class="form-group" ng-class="{ 'has-error': userRegistration.email.$touched && userRegistration.email.$invalid }">
+		<label>Email</label>
+		<input type="email" name="email" id="email" class="form-control" ng-model="email" required email/>
+		<div class= "help-block" ng-messages="userRegistration.email.$error" ng-if= "userRegistration.email.$touched">
+			<span ng-message="required">Email is required</span>
+			<span ng-message="email">Enter a valid email</span>
+		</div>
+	</div>
+	<!-- Password --> 
+	<div class="form-group" ng-class="{ 'has-error': userRegistration.password.$touched && userRegistration.password.$invalid }">
+		<label>Password</label>
+		<input type="password" name="password" id="password" class="form-control" ng-model="password" required ng-minLength="5"/>
+		<div class= "help-block" ng-messages="userRegistration.password.$error" ng-if= "userRegistration.password.$touched">
+			<span ng-message="required">Password is required</span>
+			<span ng-message="minlength">Password is too short</span>
+		</div>
+	<button type="submit" class="btn btn-primary" ng-disabled="userRegistration.$invalid">Submit</button>
+</form>
