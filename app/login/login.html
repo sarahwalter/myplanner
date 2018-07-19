@@ -1,0 +1,20 @@
+<form name="userLogin" ng-submit="submitForm(userLogin.$valid)" role="form" novalidate>
+	<!-- Email --> 
+	<div class="form-group" ng-class="{ 'has-error': userLogin.email.$touched && userLogin.email.$invalid }">
+		<label>Email</label>
+		<input type="email" name="email" id="email" class="form-control" ng-model="email" required email/>
+		<div class= "help-block" ng-messages="userLogin.email.$error" ng-if= "userLogin.email.$touched">
+			<span ng-message="required">Email is required</span>
+			<span ng-message="email">Enter a valid email</span>
+		</div>
+	</div>
+	<!-- Password --> 
+	<div class="form-group" ng-class="{ 'has-error': userLogin.password.$touched && userLogin.password.$invalid }">
+		<label>Password</label>
+		<input type="password" name="password" id="password" class="form-control" ng-model="password" required ng-minLength="5"/>
+		<div class= "help-block" ng-messages="userRegistration.password.$error" ng-if= "userRegistration.password.$touched">
+			<span ng-message="required">Password is required</span>
+			<span ng-message="minlength">Password is too short</span>
+		</div>
+	<button type="submit" class="btn btn-primary" ng-disabled="userLogin.$invalid">Submit</button>
+</form>
