@@ -56,7 +56,7 @@ exports.eventInfoPerEvent = function(req, res){
         + " active, event_type, amount, job_id"
         + " FROM calendar_events"
         + " WHERE event_id = ?", [event], function(err, results){
-        if (err) { return sqlErr(res, err); }
+        if (err) { return error.sqlErr(res, err); }
         else { return res.send(results); }
     });
 };
@@ -76,7 +76,7 @@ exports.eventInfoPerUser = function(req, res){
         + " active, event_type, amount, job_id"
         + " FROM calendar_events"
         + " WHERE user_id = ?", [user], function(err, results){
-        if (err) { return sqlErr(res, err); }
+        if (err) { return error.sqlErr(res, err); }
         else { return res.send(results); }
     });
 };
