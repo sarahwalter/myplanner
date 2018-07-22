@@ -9,7 +9,7 @@ const error = require('./errors.js');
 exports.createUser = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
-    var u = userInfoPrepper(req.body[0]);
+    var u = userInfoPrepper(req.body);
 
     if (!u.first || !u.last || !u.email || !u.password) { return error.parameterErr(res, "Missing required fields"); }
     mysql.pool.query("INSERT INTO users (first_name, last_name, email_address, password_hash) VALUES (?,?,?,?)",
@@ -43,7 +43,7 @@ exports.deleteUser = function(req, res){
 exports.updateUser = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
-    var u = userInfoPrepper(req.body[0]);
+    var u = userInfoPrepper(req.body);
 
     if (!u.first || !u.last || !u.email || !u.password) { return error.parameterErr(res, "Missing required fields"); }
     mysql.pool.query("UPDATE users SET first=?, last=?, email=?, password=?", [u.first, u.last, u.email, u.password], function(err){
@@ -80,7 +80,7 @@ function userInfoPrepper(body){
     //No tuple vars since all are required and undefined will be caught in validation as well
     var first = body.first_name;
     var last = body.last_name;
-    var email = body.email;
+    var email = body.email_address;
     var password = body.password;
 
     return {

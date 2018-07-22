@@ -11,7 +11,7 @@ exports.createEvent = function(req, res){
     //Verify that the request body exists
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
-    var e = eventInfoPrepper(req.body[0]);
+    var e = eventInfoPrepper(req.body);
 
     //Verify the minimum requirements for inserting have been met
     if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
@@ -31,11 +31,11 @@ exports.createEvent = function(req, res){
  * Output: "204 No Content" if successful
  **************************************************/
 exports.deleteEvent = function(req, res){
-    var event_id = (req.body[0].event_id) ? req.body[0].event_id : null;
+    var event = req.params.event_id;
 
-    if (!event_id) { return error.parameterErr(res, "Missing event_id parameter"); }
+    if (!event) { return error.parameterErr(res, "Missing event_id parameter"); }
 
-    mysql.pool.query("DELETE FROM calendar_events WHERE event_id=?", [event_id], function(err){
+    mysql.pool.query("DELETE FROM calendar_events WHERE event_id=?", [event], function(err){
         if (err) { return error.sqlErr(res, err); }
         else { return res.status(204).send(); }
     });
@@ -90,7 +90,7 @@ exports.eventInfoPerUser = function(req, res){
 exports.updateEvent = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
-    var e = eventInfoPrepper(req.body[0]);
+    var e = eventInfoPrepper(req.body);
 
     //Verify the minimum requirements for inserting have been met
     if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
