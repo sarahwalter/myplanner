@@ -1,0 +1,95 @@
+
+{{>loginheader}}
+
+
+{{#if post}}
+
+
+
+        {{#if emailerr}}
+
+            <script>
+                alert("Email already exists")
+            </script>
+
+        {{else}}
+            {{#if err}}
+
+                <script>
+                    alert("Signup error")
+                </script>
+
+            {{else }}
+                <script>
+                    alert("Signup scucess")
+                </script>
+            {{/if}}
+
+         {{/if}}
+
+
+{{/if}}
+<!-- Page Content -->
+<div class="container py-3">
+    <div class="row">
+        <div class="mx-auto col-sm-6">
+            <!-- form user info -->
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">User Information</h4>
+                </div>
+                <div class="card-body">
+                    <form class="form" role="form" autocomplete="off" method="post">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="text" placeholder="First Name" required name="fname">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="text" placeholder="Last Name" required name="lname">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="email" placeholder="someone@email.com" required name="email">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="password" placeholder="Password" id="pwd" required name="pwd">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">Confirm Password</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="password" id="cpwd" placeholder="Confirm Password" required >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label"></label>
+                            <div class="col-lg-9">
+                                <input type="submit" class="btn btn-primary" value="Signup">
+                                <input type="reset" class="btn btn-secondary" value="Reset">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-9">
+                                Already signup.js ? <a href="/">Click</a> to login.
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <!-- /form user info -->
+        </div>
+    </div>
+</div>
+{{>footers}}
