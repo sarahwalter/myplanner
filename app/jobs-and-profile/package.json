@@ -1,0 +1,31 @@
+{
+  "name": "calnder_event",
+  "version": "0.0.1",
+  "description": "This project used in event based calender.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Calender"
+  ],
+  "author": "Amit KUmar",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "constants": "0.0.2",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "faker": "^4.1.0",
+    "helmet": "^3.6.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.11.1",
+    "mysql": "^2.15.0",
+    "nodemailer": "^4.0.1",
+    "nodemailer-express-handlebars": "^2.0.0",
+    "path": "^0.12.7",
+    "request": "^2.81.0",
+    "validator": "^8.0.0"
+  }
+}
