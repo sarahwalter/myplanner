@@ -14,7 +14,7 @@ angular.module('myApp.view1', ['ngRoute'])
         console.log(response);
         $scope.users = response.data;
     });
-    $http.get('/calendar_events/event/2', null).then(function(response){
+    $http.get('/calendar_events/user/2', null).then(function(response){
         console.log(response);
         $scope.rules = response.data;
     });
