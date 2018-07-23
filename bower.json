@@ -15,6 +15,6 @@
     "angular-material": "^1.1.10"
   },
   "resolutions":{
-    "angular":"1.7.0"
+    "angular":"1.7.2"
   }
 }
