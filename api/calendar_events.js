@@ -9,6 +9,7 @@ const error = require('./errors.js');
  **************************************************/
 exports.createEvent = function(req, res){
     //Verify that the request body exists
+    console.log(req);
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
     var e = eventInfoPrepper(req.body);

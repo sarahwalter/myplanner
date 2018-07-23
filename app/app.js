@@ -8,6 +8,7 @@ angular.module('myApp', [
   'myApp.view2',
   'myApp.register',
   'myApp.login',
+  'myApp.calendar',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
