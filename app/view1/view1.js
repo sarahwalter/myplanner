@@ -9,12 +9,12 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$http', '$scope', function($http, $scope) {
-    $http.get('/users/2', null).then(function(response){
+.controller('View1Ctrl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
+    $http.get('/users/' + $rootScope.globals.currentUser.user_id, null).then(function(response){
         console.log(response);
         $scope.users = response.data;
     });
-    $http.get('/calendar_events/event/2', null).then(function(response){
+    $http.get('/calendar_events/event/' + $rootScope.globals.currentUser.user_id, null).then(function(response){
         console.log(response);
         $scope.rules = response.data;
     });

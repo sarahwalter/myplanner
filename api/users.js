@@ -23,9 +23,12 @@ exports.createUser = function(req, res){
             /* Create user */
             if (numRows == 0 ) { 
                 mysql.pool.query("INSERT INTO users (first_name, last_name, email_address, password_hash) VALUES (?,?,?,?)",
-        [u.first, u.last, u.email, u.password], function(err){
+        [u.first, u.last, u.email, u.password], function(err, results){
         if (err) { return error.sqlErr(res, err); }
-        else { res.status(201).send("User created"); }
+        else { 
+                /* Send user credentials */
+                var credentials = { username: u.email, user_id: results.insertId};
+                res.send(credentials); }
         });
             }
             /* Otherwise send error message */
