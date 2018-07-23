@@ -2,20 +2,37 @@ const mysql = require('./dbcon.js');
 const error = require('./errors.js');
 
 /***************************************************
- * Name: createUser
+ * Name: authenticateUser
  * Input: Body with all none PK fields of user
  * Output: "201 Created" if successful
  **************************************************/
-exports.createUser = function(req, res){
+exports.authenticateUser = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
     var u = userInfoPrepper(req.body);
-
-    /* Check if any fields are missing */
-    if (!u.first || !u.last || !u.email || !u.password) { return error.parameterErr(res, "Missing required fields"); }
-    
-    /* Ensure email address is unique */
-    mysql.pool.query("SELECT email_address FROM users WHERE email_address = ?", [u.email], function(err, results){
+    console.log(u);
+    /* Check if first and last are undefined = LOGIN */
+    if (u.first == undefined && u.last == undefined) { 
+        mysql.pool.query("SELECT * FROM users WHERE email_address = ?", [u.email], function(err, results){
+        if(err) {  return error.sqlErr(results, err); }
+        else {
+            if(u.password == results[0].password_hash)
+            {
+                /* Send user credentials */
+                var credentials = { username: u.email, user_id: results[0].user_id};
+                res.send(credentials); 
+            }
+            else {
+                res.status(400).send("Username or password is not correct");
+            }
+        }
+        });
+        }
+        
+    /* REGISTER */
+    else {
+        /* Ensure email address is unique */
+        mysql.pool.query("SELECT email_address FROM users WHERE email_address = ?", [u.email], function(err, results){
         if(err) {return error.sqlErr(results, err); }
         else {
             var numRows = results.length;
@@ -36,7 +53,8 @@ exports.createUser = function(req, res){
                 res.status(400).send("Oops email address is already in use");
             }
         }
-    })
+    });
+    }
 };
 
 /***************************************************
