@@ -24,7 +24,7 @@ app.get('/calendar_events/user/:user_id', calendar_events.eventInfoPerUser);
 app.patch('/calendar_events/:event_id', calendar_events.updateEvent);
 
 //USER CALLS
-app.post('/users', users.createUser);
+app.post('/users', users.authenticateUser);
 app.delete('/users/:user_id', users.deleteUser);
 app.get('/users/:user_id', users.userInfo);
 app.patch('/users/:user_id', users.updateUser);

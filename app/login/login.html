@@ -1,3 +1,4 @@
+<div ng-if="errorMessage">{{ errorMessage }}</div>
 <form name="userLogin" ng-submit="submitForm(userLogin.$valid)" role="form" novalidate>
 	<!-- Email --> 
 	<div class="form-group" ng-class="{ 'has-error': userLogin.email.$touched && userLogin.email.$invalid }">
@@ -11,10 +12,9 @@
 	<!-- Password --> 
 	<div class="form-group" ng-class="{ 'has-error': userLogin.password.$touched && userLogin.password.$invalid }">
 		<label>Password</label>
-		<input type="password" name="password" id="password" class="form-control" ng-model="password" required ng-minLength="5"/>
+		<input type="password" name="password" id="password" class="form-control" ng-model="password"/>
 		<div class= "help-block" ng-messages="userRegistration.password.$error" ng-if= "userRegistration.password.$touched">
 			<span ng-message="required">Password is required</span>
-			<span ng-message="minlength">Password is too short</span>
 		</div>
 	<button type="submit" class="btn btn-primary" ng-disabled="userLogin.$invalid">Submit</button>
 </form>
