@@ -1,3 +1,4 @@
+<div ng-if="errorMessage">{{ errorMessage }}</div>
 <form name="userRegistration" ng-submit="submitForm(userRegistration.$valid)" role="form" novalidate>
     <!-- First Name --> 
 	<div class="form-group" ng-class="{ 'has-error': userRegistration.first.$touched && userRegistration.first.$invalid }">

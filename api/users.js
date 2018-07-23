@@ -11,12 +11,29 @@ exports.createUser = function(req, res){
 
     var u = userInfoPrepper(req.body);
 
+    /* Check if any fields are missing */
     if (!u.first || !u.last || !u.email || !u.password) { return error.parameterErr(res, "Missing required fields"); }
-    mysql.pool.query("INSERT INTO users (first_name, last_name, email_address, password_hash) VALUES (?,?,?,?)",
-    [u.first, u.last, u.email, u.password], function(err){
+    
+    /* Ensure email address is unique */
+    mysql.pool.query("SELECT email_address FROM users WHERE email_address = ?", [u.email], function(err, results){
+        if(err) {return error.sqlErr(results, err); }
+        else {
+            var numRows = results.length;
+            
+            /* Create user */
+            if (numRows == 0 ) { 
+                mysql.pool.query("INSERT INTO users (first_name, last_name, email_address, password_hash) VALUES (?,?,?,?)",
+        [u.first, u.last, u.email, u.password], function(err){
         if (err) { return error.sqlErr(res, err); }
         else { res.status(201).send("User created"); }
-    });
+        });
+            }
+            /* Otherwise send error message */
+            else {
+                res.status(400).send("Oops email address is already in use");
+            }
+        }
+    })
 };
 
 /***************************************************
