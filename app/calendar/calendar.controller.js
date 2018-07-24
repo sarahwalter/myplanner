@@ -9,7 +9,8 @@ angular.module('myApp.calendar', ['ngRoute', 'ngMaterial'])
         });
     }])
 
-    .controller('CalendarCtrl', ['$http', '$scope', function($http, $scope) {
+    .controller('CalendarCtrl', ['$http', '$scope', '$rootScope', '$location', function($http, $scope, $rootScope, $location) {
+        $scope.user_id = $rootScope.globals.currentUser.user_id
         $scope.eventTitle = "";
         $scope.eventDate = new Date();
         $scope.eventTime = new Date(new Date().toDateString() + ' ' + '08:00');
@@ -17,8 +18,11 @@ angular.module('myApp.calendar', ['ngRoute', 'ngMaterial'])
         $scope.eventType = "";
 
         $scope.submitEvent = function(){
+            
+            if ($scope.eventTitle == ""){ $scope.errorMessage = "Event title required"}
+            else {
             var eventSubmit = {
-                user_id : 2,
+                user_id : $rootScope.globals.currentUser.user_id,
                 start_datetime : datetimeFormatter($scope.eventDate, $scope.eventTime),
                 end_datetime: null,
                 title : $scope.eventTitle,
@@ -31,9 +35,17 @@ angular.module('myApp.calendar', ['ngRoute', 'ngMaterial'])
                 job_id : null
             };
 
-            $http.post('/calendar_events', eventSubmit, null).then(function(response){
+            $http.post('/calendar_events', eventSubmit, null)
+            .then(function successful(response){
+                /* If successful redirect to landing page*/
                 console.log(response);
-            });
+                $location.path('/');
+            }, function failure(response){
+                    /* If not successful */
+                    /*server returns error, display message */
+                    $scope.errorMessage = response.data;
+                });
+            }
         };
 
         /*Formats JS datetime for MySQL*/
