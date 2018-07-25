@@ -98,8 +98,9 @@ exports.updateEvent = function(req, res){
 
     mysql.pool.query("UPDATE calendar_events"
     + " SET start_datetime=?, end_datetime=?, title=?, notes=?, rep_stop_date=?, rep_day_month=?, rep_day_week=?,"
-    + " event_type=?, amount=?, job_id=?",
-    [e.start, e.end, e.title, e.notes, e.stop_date, e.day_month, e.day_week, e.event_type, e.amount, e.job_id], function(err){
+    + " event_type=?, amount=?, job_id=?"
+    + " WHERE event_id=?",
+    [e.start, e.end, e.title, e.notes, e.stop_date, e.day_month, e.day_week, e.event_type, e.amount, e.job_id, e.event_id], function(err){
        if (err) { return error.sqlErr(res, err); }
        else { return res.status(204).send(); }
     });
