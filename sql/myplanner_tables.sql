@@ -33,7 +33,7 @@ CREATE TABLE jobs (
 	frequency ENUM('Hourly', 'Weekly', 'Monthly', 'Annually', 'Bi-Monthly', 'Bi-Weekly') NOT NULL,
 	filing_status ENUM('Single', 'Married Filing Jointly', 'Married Filing Separately', 'Head of Household', 'Qualifying Widower') NOT NULL,
 	allowances TINYINT NOT NULL,
-	401k_percent TINYINT NOT NULL,
+	retirement_percent TINYINT NOT NULL,
 	pretax_static INT NOT NULL,
 	posttax_static INT NOT NULL,
 	fed_tax_rate TINYINT NOT NULL,
