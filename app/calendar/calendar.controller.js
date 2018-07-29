@@ -10,7 +10,7 @@ angular.module('myApp.calendar', ['ngRoute', 'ngMaterial'])
     }])
 
     .controller('CalendarCtrl', ['$http', '$scope', '$rootScope', '$location', function($http, $scope, $rootScope, $location) {
-        $scope.user_id = $rootScope.globals.currentUser.user_id
+        $scope.user_id = $rootScope.globals.currentUser.user_id;
         $scope.eventTitle = "";
         $scope.eventDate = new Date();
         $scope.eventTime = new Date(new Date().toDateString() + ' ' + '08:00');

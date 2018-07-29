@@ -19,7 +19,7 @@ exports.createJob = function(req, res){
     }
 
     mysql.pool.query("INSERT INTO jobs (user_id, title, wage, frequency, filing_status, allowances,"
-        + " 401k_percent, pretax_static, posttax_static, fed_tax_rate, loc_tax_rate)"
+        + " retirement_percent, pretax_static, posttax_static, fed_tax_rate, loc_tax_rate)"
         + " VALUES (?,?,?,?,?,?,?,?,?,?,?)",
         [j.user, j.title, j.wage, j.frequency, j.filing, j.allowances, j.retirement, j.pretax, j.posttax, j.fed_tax_rate, j.loc_tax_rate],
         function(err){
@@ -55,7 +55,7 @@ exports.jobInfoPerUser = function(req, res){
 
     if (!user) { return error.parameterErr(res, "Missing user_id parameter"); }
 
-    mysql.pool.query("SELECT job_id, title, wage, frequency, filing_status, allowances, 401k_percent, pretax_static"
+    mysql.pool.query("SELECT job_id, title, wage, frequency, filing_status, allowances, retirement_percent, pretax_static,"
         + " posttax_static, fed_tax_rate, loc_tax_rate"
         + " FROM jobs"
         + " WHERE user_id = ?", [user], function(err, results){
@@ -81,7 +81,7 @@ exports.updateJob = function(req, res){
     }
 
     mysql.pool.query("UPDATE jobs"
-        + " SET user_id=?, title=?, wage=?, frequency=?, filing_status=?, allowances=?, 401k_percent=?,"
+        + " SET user_id=?, title=?, wage=?, frequency=?, filing_status=?, allowances=?, retirement_percent=?,"
         + " pretax_static=?, posttax_static=?, fed_tax_rate=?, loc_tax_rate"
         + " WHERE job_id=?",
         [j.user, j.title, j.wage, j.frequency, j.filing, j.allowances, j.retirement, j.pretax, j.posttax, j.fed_tax_rate, j.loc_tax_rate, j.job], function(err){
