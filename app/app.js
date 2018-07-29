@@ -10,6 +10,7 @@ angular.module('myApp', [
   'myApp.register',
   'myApp.login',
   'myApp.calendar',
+  'myApp.paycheck_estimator',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
