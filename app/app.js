@@ -7,10 +7,12 @@ angular.module('myApp', [
   'ngCookies',
   'myApp.view1',
   'myApp.view2',
+  'myApp.landing',
   'myApp.register',
   'myApp.login',
   'myApp.calendar',
-  'myApp.version'
+  'myApp.version',
+  'myApp.logout'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');

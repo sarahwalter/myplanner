@@ -9,14 +9,18 @@ angular.module('myApp.login', ['ngRoute'])
   });
 }])
 .controller('LoginCtrl', ['$scope', '$http', '$rootScope', '$cookies', '$location', function($scope, $http, $rootScope, $cookies, $location) {
-    $scope.submitForm = function(isValid){
+    
+    ClearCredentials();
+    $scope.submitLogin = function(){
+        console.log("in submit");
+        var isValid = true;
 		if (isValid) {
 		    /* Structure JSON to send to database */
 		    var toSend = {
               email_address : $scope.email,
               password : $scope.password
               };
-              
+              console.log("in login controller" + toSend);
             /* Send post request to server */  
             $http.post("/users", toSend)
             .then(function successful(response){
@@ -46,6 +50,15 @@ angular.module('myApp.login', ['ngRoute'])
                     $scope.errorMessage = response.data;
                 });
 		}
+		
 	};
+	
+	/* The following code is from http://jasonwatmore.com/post/2015/03/10/angularjs-user-registration-and-login-example-tutorial#logincontroller */
+    function ClearCredentials() {
+            $rootScope.globals = {};
+            $cookies.remove('globals');
+            $http.defaults.headers.common.Authorization = 'Basic';
+        }
+    
 
 }]);

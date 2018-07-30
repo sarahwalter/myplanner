@@ -1,5 +1,7 @@
 const mysql = require('./dbcon.js');
 const error = require('./errors.js');
+const bcrypt = require('bcrypt');
+const SALT_ROUNDS = 10;
 
 /***************************************************
  * Name: authenticateUser
@@ -16,15 +18,23 @@ exports.authenticateUser = function(req, res){
         mysql.pool.query("SELECT * FROM users WHERE email_address = ?", [u.email], function(err, results){
         if(err) {  return error.sqlErr(results, err); }
         else {
-            if(u.password == results[0].password_hash)
-            {
-                /* Send user credentials */
+            //console.log(u.password);
+            //console.log(results[0].password_hash);
+            //const hashed_password = bcrypt.hashSync('u.password', SALT_ROUNDS);
+            //console.log(hashed_password);
+            bcrypt.compare(u.password, results[0].password_hash, function(err, match){
+                if(err){ console.log("oops")}
+                console.log(match);
+                if(match){
+                    console.log("passwords match");
+                    /* Send user credentials */
                 var credentials = { username: u.email, user_id: results[0].user_id};
-                res.send(credentials); 
-            }
-            else {
-                res.status(400).send("Username or password is not correct");
-            }
+                res.send(credentials);
+                }
+                else {
+                   res.status(400).send("Username or password is not correct"); 
+                }
+            });
         }
         });
         }
@@ -38,15 +48,19 @@ exports.authenticateUser = function(req, res){
             var numRows = results.length;
             
             /* Create user */
-            if (numRows == 0 ) { 
-                mysql.pool.query("INSERT INTO users (first_name, last_name, email_address, password_hash) VALUES (?,?,?,?)",
-        [u.first, u.last, u.email, u.password], function(err, results){
-        if (err) { return error.sqlErr(res, err); }
-        else { 
-                /* Send user credentials */
-                var credentials = { username: u.email, user_id: results.insertId};
-                res.send(credentials); }
-        });
+            if (numRows == 0 ) {
+                //const hash = bcrypt.hashSync('u.password', SALT_ROUNDS);
+                bcrypt.hash(u.password, SALT_ROUNDS).then(function(hashedPassword){
+                   mysql.pool.query("INSERT INTO users (first_name, last_name, email_address, password_hash) VALUES (?,?,?,?)",
+                    [u.first, u.last, u.email, hashedPassword], function(err, results){
+                        if (err) { return error.sqlErr(res, err); }
+                        else { 
+                            /* Send user credentials */
+                            var credentials = { username: u.email, user_id: results.insertId};
+                            res.send(credentials); }
+                            }); 
+                });
+                
             }
             /* Otherwise send error message */
             else {
@@ -70,7 +84,7 @@ exports.deleteUser = function(req, res){
     mysql.pool.query("DELETE FROM users WHERE user_id = ?", [user], function(err){
         if (err) { return error.sqlErr(res, err); }
         else { res.status(204).send(); }
-    })
+        })
 };
 
 /***************************************************
@@ -128,3 +142,4 @@ function userInfoPrepper(body){
         password : password
     }
 }
+

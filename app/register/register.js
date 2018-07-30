@@ -1,5 +1,4 @@
 'use strict';
-
 angular.module('myApp.register', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
@@ -9,7 +8,11 @@ angular.module('myApp.register', ['ngRoute'])
   });
 }])
 .controller('RegisterCtrl', ['$scope', '$http', '$location', '$rootScope', '$cookies', function($scope, $http, $location, $rootScope, $cookies) {
-    $scope.submitForm = function(isValid){
+    
+    ClearCredentials();
+    
+    $scope.submitRegister = function(){
+        var isValid = true;
 		if (isValid) {
 		    /* Structure JSON to send to database */
 		    var toSend = {
@@ -46,5 +49,11 @@ angular.module('myApp.register', ['ngRoute'])
                 });
 		}
 	};
-
+    
+    /* The following code is from http://jasonwatmore.com/post/2015/03/10/angularjs-user-registration-and-login-example-tutorial#logincontroller */
+    function ClearCredentials() {
+            $rootScope.globals = {};
+            $cookies.remove('globals');
+            $http.defaults.headers.common.Authorization = 'Basic';
+        }
 }]);
