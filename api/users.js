@@ -14,7 +14,7 @@ exports.authenticateUser = function(req, res){
     var u = userInfoPrepper(req.body);
     console.log(u);
     /* Check if first and last are undefined = LOGIN */
-    if (u.first == undefined && u.last == undefined) { 
+    if (u.first == undefined && u.last == undefined) {
         mysql.pool.query("SELECT * FROM users WHERE email_address = ?", [u.email], function(err, results){
         if(err) {  return error.sqlErr(results, err); }
         else {
@@ -37,7 +37,7 @@ exports.authenticateUser = function(req, res){
             }
         }
         });
-        }
+    }
         
     /* REGISTER */
     else {
