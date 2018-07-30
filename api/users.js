@@ -18,11 +18,10 @@ exports.authenticateUser = function(req, res){
         mysql.pool.query("SELECT * FROM users WHERE email_address = ?", [u.email], function(err, results){
         if(err) {  return error.sqlErr(results, err); }
         else {
-            //console.log(u.password);
-            //console.log(results[0].password_hash);
-            //const hashed_password = bcrypt.hashSync('u.password', SALT_ROUNDS);
-            //console.log(hashed_password);
-            bcrypt.compare(u.password, results[0].password_hash, function(err, match){
+            var numRows = results.length;
+            if(numRows === 0){res.status(400).send("Username or password is not correct")}
+            else {
+                bcrypt.compare(u.password, results[0].password_hash, function(err, match){
                 if(err){ console.log("oops")}
                 console.log(match);
                 if(match){
@@ -34,7 +33,8 @@ exports.authenticateUser = function(req, res){
                 else {
                    res.status(400).send("Username or password is not correct"); 
                 }
-            });
+                });
+            }
         }
         });
         }
@@ -49,7 +49,6 @@ exports.authenticateUser = function(req, res){
             
             /* Create user */
             if (numRows == 0 ) {
-                //const hash = bcrypt.hashSync('u.password', SALT_ROUNDS);
                 bcrypt.hash(u.password, SALT_ROUNDS).then(function(hashedPassword){
                    mysql.pool.query("INSERT INTO users (first_name, last_name, email_address, password_hash) VALUES (?,?,?,?)",
                     [u.first, u.last, u.email, hashedPassword], function(err, results){

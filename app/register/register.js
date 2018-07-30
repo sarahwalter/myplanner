@@ -8,12 +8,16 @@ angular.module('myApp.register', ['ngRoute'])
   });
 }])
 .controller('RegisterCtrl', ['$scope', '$http', '$location', '$rootScope', '$cookies', function($scope, $http, $location, $rootScope, $cookies) {
-    
+    if($scope.errorMessage){ $scope.errorMessage = undefined}
     ClearCredentials();
     
     $scope.submitRegister = function(){
-        var isValid = true;
-		if (isValid) {
+        if ($scope.first === undefined || $scope.first === ""){$scope.errorMessage = "First name required"}
+        else if ($scope.last === undefined || $scope.last === ""){$scope.errorMessage = "Last name required"}
+        else if ($scope.email === undefined || $scope.email=== ""){ $scope.errorMessage = "Valid email required"}
+        else if ($scope.password === undefined || $scope.password === ""){$scope.errorMessage = "Password required"}
+        else if ($scope.password.length < 5){$scope.errorMessage = "Password must be at least 5 characters"}
+		else {
 		    /* Structure JSON to send to database */
 		    var toSend = {
               first_name : $scope.first,
