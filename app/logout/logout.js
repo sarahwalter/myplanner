@@ -23,7 +23,7 @@ angular.module('myApp.logout', ['ngRoute'])
             $http.defaults.headers.common.Authorization = 'Basic';
         }
         
-          /* Redirect to landing page */
-                $location.path('/');
+          /* Redirect to login page */
+                $location.path('/login');
   }
 }]);
