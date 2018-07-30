@@ -37,13 +37,14 @@
     "angular-aria": "^1.7.2",
     "angular-material": "^1.1.10",
     "angular-messages": "^1.7.2",
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.2",
     "express": "^4.16.3",
     "jquery": "^3.3.1",
     "mysql": "^2.15.0",
     "ng-animate": "^0.3.3",
     "path": "^0.12.7",
-    "popper.js": "^1.14.3",
-    "bootstrap": "^4.1.2"
+    "popper.js": "^1.14.3"
   }
 }
