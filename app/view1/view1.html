@@ -12,5 +12,6 @@
         <li>Title: {{rule.title}}</li>
         <li>Start: {{rule.start_datetime}}</li>
         <li>Notes: {{rule.notes}}</li>
+        <li><button type="button" class="btn btn-success" ng-click="DeleteEvent(rule.event_id)">Delete: {{rule.event_id}}</button>
     </ul>
 </div>

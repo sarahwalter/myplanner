@@ -73,7 +73,7 @@ exports.eventInfoPerUser = function(req, res){
 
     if (!user) { return error.parameterErr(res, "Missing user_id parameter"); }
 
-    mysql.pool.query("SELECT start_datetime, end_datetime, title, notes, rep_stop_date, rep_day_month, rep_day_week,"
+    mysql.pool.query("SELECT event_id, start_datetime, end_datetime, title, notes, rep_stop_date, rep_day_month, rep_day_week,"
         + " active, event_type, amount, job_id"
         + " FROM calendar_events"
         + " WHERE user_id = ?", [user], function(err, results){
