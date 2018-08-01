@@ -9,9 +9,10 @@ const error = require('./errors.js');
  **************************************************/
 exports.createEvent = function(req, res){
     //Verify that the request body exists
+    console.log(req);
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
-    var e = eventInfoPrepper(req.body[0]);
+    var e = eventInfoPrepper(req.body);
 
     //Verify the minimum requirements for inserting have been met
     if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
@@ -31,11 +32,11 @@ exports.createEvent = function(req, res){
  * Output: "204 No Content" if successful
  **************************************************/
 exports.deleteEvent = function(req, res){
-    var event_id = (req.body[0].event_id) ? req.body[0].event_id : null;
+    var event = req.params.event_id;
 
-    if (!event_id) { return error.parameterErr(res, "Missing event_id parameter"); }
+    if (!event) { return error.parameterErr(res, "Missing event_id parameter"); }
 
-    mysql.pool.query("DELETE FROM calendar_events WHERE event_id=?", [event_id], function(err){
+    mysql.pool.query("DELETE FROM calendar_events WHERE event_id=?", [event], function(err){
         if (err) { return error.sqlErr(res, err); }
         else { return res.status(204).send(); }
     });
@@ -56,7 +57,7 @@ exports.eventInfoPerEvent = function(req, res){
         + " active, event_type, amount, job_id"
         + " FROM calendar_events"
         + " WHERE event_id = ?", [event], function(err, results){
-        if (err) { return sqlErr(res, err); }
+        if (err) { return error.sqlErr(res, err); }
         else { return res.send(results); }
     });
 };
@@ -76,7 +77,7 @@ exports.eventInfoPerUser = function(req, res){
         + " active, event_type, amount, job_id"
         + " FROM calendar_events"
         + " WHERE user_id = ?", [user], function(err, results){
-        if (err) { return sqlErr(res, err); }
+        if (err) { return error.sqlErr(res, err); }
         else { return res.send(results); }
     });
 };
@@ -90,15 +91,16 @@ exports.eventInfoPerUser = function(req, res){
 exports.updateEvent = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
-    var e = eventInfoPrepper(req.body[0]);
+    var e = eventInfoPrepper(req.body);
 
     //Verify the minimum requirements for inserting have been met
     if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
 
     mysql.pool.query("UPDATE calendar_events"
     + " SET start_datetime=?, end_datetime=?, title=?, notes=?, rep_stop_date=?, rep_day_month=?, rep_day_week=?,"
-    + " event_type=?, amount=?, job_id=?",
-    [e.start, e.end, e.title, e.notes, e.stop_date, e.day_month, e.day_week, e.event_type, e.amount, e.job_id], function(err){
+    + " event_type=?, amount=?, job_id=?"
+    + " WHERE event_id=?",
+    [e.start, e.end, e.title, e.notes, e.stop_date, e.day_month, e.day_week, e.event_type, e.amount, e.job_id, e.event_id], function(err){
        if (err) { return error.sqlErr(res, err); }
        else { return res.status(204).send(); }
     });
