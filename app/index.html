@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
@@ -37,6 +38,7 @@
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-messages/angular-messages.js"></script>
@@ -50,6 +52,7 @@
   <script src="landing/landing.js"></script>
   <script src="calendar/calendar.controller.js"></script>
   <script src="partials/navigation.js"></script>
+  <script src="calendar-ui/calendar-ui.js"></script>
   <script src="paycheck_estimator/paycheck_estimator.controller.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
@@ -59,5 +62,11 @@
   <script src="bower_components/angular-aria/angular-aria.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jquery, moment, and angular have to get included before fullcalendar -->
+  <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+  <!--<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>-->
+  <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+  <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+  <script type="text/javascript" src="bower_components/fullcalendar/dist/gcal.js"></script>
 </body>
 </html>
