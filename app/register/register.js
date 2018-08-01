@@ -12,6 +12,10 @@ angular.module('myApp.register', ['ngRoute'])
     ClearCredentials();
     
     $scope.submitRegister = function(){
+
+
+ console.log($scope.first)
+
         if ($scope.first === undefined || $scope.first === ""){$scope.errorMessage = "First name required"}
         else if ($scope.last === undefined || $scope.last === ""){$scope.errorMessage = "Last name required"}
         else if ($scope.email === undefined || $scope.email=== ""){ $scope.errorMessage = "Valid email required"}
