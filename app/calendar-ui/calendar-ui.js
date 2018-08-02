@@ -11,7 +11,7 @@ angular.module('myApp.calendar-ui', ['ngRoute'])
   });
 }])
 
-.controller('Calendar-uiCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', function ($http, $scope, $rootScope, uiCalendarConfig) {
+.controller('Calendar-uiCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$window', '$location', function ($http, $scope, $rootScope, uiCalendarConfig, $window, $location) {
         $scope.SelectedEvent = null;
         var isFirstTime = true;
         
@@ -51,10 +51,20 @@ angular.module('myApp.calendar-ui', ['ngRoute'])
                 height: 450,
                 editable: true,
                 displayEventTime: false,
+                
+                customButtons: {
+                    addEvent: {
+                    text: '+',
+                    click: function() {
+                        //$location.path('/eventForm');
+                        $window.location.href = '#!/eventForm';
+                        }
+                    }
+                 },
                 header: {
                     left: 'month agendaWeek agendaDay',
                     center: 'title',
-                    right: 'today prev, next'
+                    right: 'today prev, next addEvent'
                 },
                 eventClick: function (event) {
                     $scope.SelectedEvent = event;
@@ -67,5 +77,10 @@ angular.module('myApp.calendar-ui', ['ngRoute'])
                 }*/
             }
         };
+        
+        /*$scope.createEvent = function(){
+            console.log("creating new event");
+            $location.path('/eventForm');
+        };*/
     }]);
 
