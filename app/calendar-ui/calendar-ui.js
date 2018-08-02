@@ -1,5 +1,7 @@
 'use strict';
 
+/* Calendar citation / tutorial = https://www.youtube.com/watch?v=xhnKKEpZDeQ */
+
 angular.module('myApp.calendar-ui', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
@@ -25,6 +27,9 @@ angular.module('myApp.calendar-ui', ['ngRoute'])
             $scope.events.splice(0, $scope.events.length);
             
             angular.forEach(data.data, function (value) {
+                
+                /* Timezone fix for date */
+                /* https://stackoverflow.com/questions/17545708/parse-date-without-timezone-javascript */
                 var dateStart = new Date(value.startAt);
                 var dateEnd = new Date(value.endAt);
                 var userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
@@ -34,7 +39,8 @@ angular.module('myApp.calendar-ui', ['ngRoute'])
                     description: value.Description,
                     start: new Date(dateStart.getTime() + userTimezoneOffset),
                     end: new Date(dateEnd.getTime() + userTimezoneOffset),
-                    allDay : (value.isFullDay === "false")
+                    allDay : (value.isFullDay === "false"),
+                    stick: true
                 });
             });
         });
@@ -53,12 +59,12 @@ angular.module('myApp.calendar-ui', ['ngRoute'])
                 eventClick: function (event) {
                     $scope.SelectedEvent = event;
                 },
-                eventAfterAllRender: function () {
+                /*eventAfterAllRender: function () {
                     if ($scope.events.length > 0 && isFirstTime) {
                         //Focus first event
                         uiCalendarConfig.calendars.myCalendar.fullCalendar('gotoDate', $scope.events[0].start);
                     }
-                }
+                }*/
             }
         };
     }]);
