@@ -5,12 +5,12 @@
     </div>
     <div class="col-md-4">
         <div class="row">
-            <button type="button" class="btn btn-success" ng-click="createEvent">+</button>
+            <button type="button" class="btn btn-success" ng-click="createEvent()">+</button>
         </div>
         <div class="row">
-            <div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:0px">
-                <h2 style="margin-top:0px">Selected Event:</h2>
-                <h3 style="color:#A9A50E">{{SelectedEvent.title}}</h3>
+            <div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:50px">
+                <h2>Selected Event:</h2>
+                <h3>{{SelectedEvent.title}}</h3>
                 <p>{{SelectedEvent.description}}</p>
             </div>
         </div>

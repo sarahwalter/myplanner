@@ -12,39 +12,39 @@ angular.module('myApp.calendar', ['ngRoute'])
 }])
 
 .controller('CalendarCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$window', '$location', function ($http, $scope, $rootScope, uiCalendarConfig, $window, $location) {
+
         $scope.SelectedEvent = null;
         var isFirstTime = true;
         
         $scope.events = [];
         $scope.eventSources = [$scope.events];
         
-       
+        $scope.createEvent = function(){
+            $location.path('/eventForm');
+        };
         //Load events from server
-        $http.get('/calendar-ui/'+ $rootScope.globals.currentUser.user_id, {
-            cache: true,
-            params: {}
-        }).then(function (data) {
+        $http.get('/calendar-ui/'+ $rootScope.globals.currentUser.user_id, null).then(function (data) {
             $scope.events.splice(0, $scope.events.length);
             
             angular.forEach(data.data, function (value) {
-                
+            
                 /* Timezone fix for date */
                 /* https://stackoverflow.com/questions/17545708/parse-date-without-timezone-javascript */
-                var dateStart = new Date(value.startAt);
-                var dateEnd = new Date(value.endAt);
+                var dateStart = new Date(value.start_datetime);
+                var dateEnd = new Date(value.end_datetime);
                 var userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
                 
                 $scope.events.push({
                     title: value.title,
-                    description: value.Description,
+                    description: value.notes,
                     start: new Date(dateStart.getTime() + userTimezoneOffset),
                     end: new Date(dateEnd.getTime() + userTimezoneOffset),
-                    allDay : (value.isFullDay === "false"),
+                    allDay : (value.isFullDay === "true"),
                     stick: true
                 });
             });
         });
-        
+        console.log($scope.eventSources);
         //Configure the Calendar
         $scope.uiConfig = {
             calendar : {
@@ -52,7 +52,7 @@ angular.module('myApp.calendar', ['ngRoute'])
                 editable: true,
                 displayEventTime: false,
                 
-                customButtons: {
+                /*customButtons: {
                     addEvent: {
                     text: '+',
                     click: function() {
@@ -60,11 +60,11 @@ angular.module('myApp.calendar', ['ngRoute'])
                         $window.location.href = '#!/eventForm';
                         }
                     }
-                 },
+                 },*/
                 header: {
                     left: 'month agendaWeek agendaDay',
                     center: 'title',
-                    right: 'today prev, next addEvent'
+                    right: 'today prev, next'  //addEvent
                 },
                 eventClick: function (event) {
                     $scope.SelectedEvent = event;
@@ -77,10 +77,5 @@ angular.module('myApp.calendar', ['ngRoute'])
                 }*/
             }
         };
-        
-        /*$scope.createEvent = function(){
-            console.log("creating new event");
-            $location.path('/eventForm');
-        };*/
     }]);
 
