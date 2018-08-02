@@ -7,6 +7,7 @@ const SALT_ROUNDS = 10;
  * Name: authenticateUser
  * Input: Body with all none PK fields of user
  * Output: "201 Created" if successful
+ * Notes: Bcrypt citation http://codetheory.in/using-the-node-js-bcrypt-module-to-hash-and-safely-store-passwords/
  **************************************************/
 exports.authenticateUser = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
@@ -141,4 +142,3 @@ function userInfoPrepper(body){
         password : password
     }
 }
-
