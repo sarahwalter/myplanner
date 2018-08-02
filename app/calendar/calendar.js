@@ -2,16 +2,16 @@
 
 /* Calendar citation / tutorial = https://www.youtube.com/watch?v=xhnKKEpZDeQ */
 
-angular.module('myApp.calendar-ui', ['ngRoute'])
+angular.module('myApp.calendar', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/calendar-ui', {
-    templateUrl: 'calendar-ui/calendar-ui.html',
-    controller: 'Calendar-uiCtrl'
+  $routeProvider.when('/calendar', {
+    templateUrl: 'calendar/calendar.html',
+    controller: 'CalendarCtrl'
   });
 }])
 
-.controller('Calendar-uiCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$window', '$location', function ($http, $scope, $rootScope, uiCalendarConfig, $window, $location) {
+.controller('CalendarCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$window', '$location', function ($http, $scope, $rootScope, uiCalendarConfig, $window, $location) {
         $scope.SelectedEvent = null;
         var isFirstTime = true;
         

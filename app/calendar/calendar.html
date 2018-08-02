@@ -1,32 +1,18 @@
 <div ng-include src="'partials/navigation.html'"></div>
-<h1>Create Event</h1>
-<h3>Placeholder: You will be creating events for UserID {{user_id}}</h3>
-<div ng-if="errorMessage">{{ errorMessage }}</div>
-<div class="container-fluid">
-    <form>
-        <div class="form-group">
-            <label for="event-title">Event Title</label>
-            <input id="event-title" class="form-control" ng-model="eventTitle" type="text" placeholder="Title">
+<div class="row">
+    <div class="col-md-8">
+        <div id="calendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <button type="button" class="btn btn-success" ng-click="createEvent">+</button>
         </div>
-        <div class="form-group">
-            <label for="event-date">Date of Event</label>
-            <md-datepicker id="event-date" ng-model="eventDate" md-placeholder="Enter Date"></md-datepicker>
-            <label for="event-time">Time of Event</label>
-            <input id="event-time" type="time" ng-model="eventTime">
+        <div class="row">
+            <div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:0px">
+                <h2 style="margin-top:0px">Selected Event:</h2>
+                <h3 style="color:#A9A50E">{{SelectedEvent.title}}</h3>
+                <p>{{SelectedEvent.description}}</p>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="event-note">Notes</label>
-            <textarea id="event-note" class="form-control"  ng-model="eventNote" type="text" rows="3"></textarea>
-        </div>
-        <label for="event-type">Type of Event</label>
-        <div class="form-group">
-            <select id="event-type" ng-model="eventType">
-                <option value="event">Event</option>
-                <option value="expense" disabled="disabled">Expense (Coming Soon)</option>
-                <option value="income" disabled="disabled">Income (Coming Soon)</option>
-            </select>
-        </div>
-
-        <button type="button" class="btn btn-success" ng-click="submitEvent()">Submit Event</button>
-    </form>
+    </div>
 </div>
