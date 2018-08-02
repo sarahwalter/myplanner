@@ -50,6 +50,7 @@ CREATE TABLE calendar_events (
 	end_datetime DATETIME NOT NULL,
 	title VARCHAR(100) NOT NULL,
 	notes VARCHAR(2000),
+	isFullDay bit NOT NULL,
 	rep_stop_date DATE,
 	rep_day_month TINYINT,
 	rep_day_week ENUM ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
