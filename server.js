@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //API files
 const calendar_events = require('./api/calendar_events.js');
+const calendar_ui = require('./api/calendar_ui.js');
 const jobs = require('./api/jobs.js');
 const users = require('./api/users.js');
 
@@ -31,6 +32,9 @@ app.delete('/calendar_events/:event_id', calendar_events.deleteEvent);
 app.get('/calendar_events/event/:event_id', calendar_events.eventInfoPerEvent);
 app.get('/calendar_events/user/:user_id', calendar_events.eventInfoPerUser);
 app.patch('/calendar_events/:event_id', calendar_events.updateEvent);
+
+//CALENDAR-UI CALLS
+app.get('/calendar-ui/:user_id', calendar_ui.eventInfoPerUser);
 
 //JOBS CALLS
 app.post('/jobs', jobs.createJob);

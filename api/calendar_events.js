@@ -9,14 +9,14 @@ const error = require('./errors.js');
  **************************************************/
 exports.createEvent = function(req, res){
     //Verify that the request body exists
-    console.log(req);
+   
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
     var e = eventInfoPrepper(req.body);
 
     //Verify the minimum requirements for inserting have been met
     if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
-
+    console.log(e);
     mysql.pool.query("INSERT INTO calendar_events (user_id, start_datetime, end_datetime, title, notes, rep_stop_date,"
     + " rep_day_month, rep_day_week, event_type, amount, job_id)"
     + " VALUES (?,?,?,?,?,?,?,?,?,?,?)",
@@ -73,7 +73,7 @@ exports.eventInfoPerUser = function(req, res){
 
     if (!user) { return error.parameterErr(res, "Missing user_id parameter"); }
 
-    mysql.pool.query("SELECT start_datetime, end_datetime, title, notes, rep_stop_date, rep_day_month, rep_day_week,"
+    mysql.pool.query("SELECT event_id, start_datetime, end_datetime, title, notes, rep_stop_date, rep_day_month, rep_day_week,"
         + " active, event_type, amount, job_id"
         + " FROM calendar_events"
         + " WHERE user_id = ?", [user], function(err, results){
@@ -120,6 +120,7 @@ function eventInfoPrepper(body){
     var end = (body.end_datetime) ? body.end_datetime : start;
     var title = (body.title) ? body.title : null;
     var notes = (body.notes) ? body.notes : null;
+    //var isFullDay = (body.isFullDay) ? body.isFullDay : null;
     var stop_date = (body.rep_stop_date) ? body.rep_stop_date : null;
     var day_month = (body.rep_day_month) ? body.rep_day_month : null;
     var day_week = (body.rep_day_week) ? body.rep_day_week : null;
@@ -134,6 +135,7 @@ function eventInfoPrepper(body){
         end : end,
         title : title,
         notes : notes,
+        //isFullDay : isFullDay,
         stop_date : stop_date,
         day_month : day_month,
         day_week : day_week,

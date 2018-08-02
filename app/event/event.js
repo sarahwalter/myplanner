@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.calendar', ['ngRoute', 'ngMaterial'])
+angular.module('myApp.event', ['ngRoute', 'ngMaterial'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/calendar', {
-            templateUrl: 'calendar/calendar.html',
-            controller: 'CalendarCtrl'
+        $routeProvider.when('/eventForm', {
+            templateUrl: 'event/eventForm.html',
+            controller: 'EventCtrl'
         });
     }])
 
-    .controller('CalendarCtrl', ['$http', '$scope', '$rootScope', '$location', function($http, $scope, $rootScope, $location) {
+    .controller('EventCtrl', ['$http', '$scope', '$rootScope', '$location', '$window', '$route', function($http, $scope, $rootScope, $location, $window, $route) {
         if(!$rootScope.globals.currentUser){$location.path('/login')}
         else{
             $scope.user_id = $rootScope.globals.currentUser.user_id
@@ -29,6 +29,7 @@ angular.module('myApp.calendar', ['ngRoute', 'ngMaterial'])
                     end_datetime: null,
                     title : $scope.eventTitle,
                     notes : $scope.eventNote,
+                    isFullDay : false,  //this value currently not passed through server to database
                     rep_stop_date : null,
                     rep_day_month : null,
                     rep_day_week : null,
@@ -36,12 +37,10 @@ angular.module('myApp.calendar', ['ngRoute', 'ngMaterial'])
                     amount : null,
                     job_id : null
                 };
-    
                 $http.post('/calendar_events', eventSubmit, null)
                 .then(function successful(response){
-                    /* If successful redirect to landing page*/
-                    console.log(response);
-                    $location.path('/');
+                    /* If successful redirect to calendar page*/
+                    $location.path('/calendar');
                 }, function failure(response){
                         /* If not successful */
                         /*server returns error, display message */
