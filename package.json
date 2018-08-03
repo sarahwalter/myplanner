@@ -32,8 +32,19 @@
     "update-index-async": "node -e \"var fs=require('fs'),indexFile='app/index-async.html',loaderFile='app/bower_components/angular-loader/angular-loader.min.js',loaderText=fs.readFileSync(loaderFile,'utf-8').split(/sourceMappingURL=angular-loader.min.js.map/).join('sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map'),indexText=fs.readFileSync(indexFile,'utf-8').split(/\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/).join('//@@NG_LOADER_START@@\\n'+loaderText+'    //@@NG_LOADER_END@@');fs.writeFileSync(indexFile,indexText);\""
   },
   "dependencies": {
+    "angular": "^1.7.2",
+    "angular-animate": "^1.7.2",
+    "angular-aria": "^1.7.2",
+    "angular-material": "^1.1.10",
+    "angular-messages": "^1.7.2",
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.2",
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
     "mysql": "^2.15.0",
-    "path": "^0.12.7"
+    "ng-animate": "^0.3.3",
+    "path": "^0.12.7",
+    "popper.js": "^1.14.3"
   }
 }

@@ -9,13 +9,14 @@ const error = require('./errors.js');
  **************************************************/
 exports.createEvent = function(req, res){
     //Verify that the request body exists
+   
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
-    var e = eventInfoPrepper(req.body[0]);
+    var e = eventInfoPrepper(req.body);
 
     //Verify the minimum requirements for inserting have been met
     if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
-
+    console.log(e);
     mysql.pool.query("INSERT INTO calendar_events (user_id, start_datetime, end_datetime, title, notes, rep_stop_date,"
     + " rep_day_month, rep_day_week, event_type, amount, job_id)"
     + " VALUES (?,?,?,?,?,?,?,?,?,?,?)",
@@ -31,11 +32,11 @@ exports.createEvent = function(req, res){
  * Output: "204 No Content" if successful
  **************************************************/
 exports.deleteEvent = function(req, res){
-    var event_id = (req.body[0].event_id) ? req.body[0].event_id : null;
+    var event = req.params.event_id;
 
-    if (!event_id) { return error.parameterErr(res, "Missing event_id parameter"); }
+    if (!event) { return error.parameterErr(res, "Missing event_id parameter"); }
 
-    mysql.pool.query("DELETE FROM calendar_events WHERE event_id=?", [event_id], function(err){
+    mysql.pool.query("DELETE FROM calendar_events WHERE event_id=?", [event], function(err){
         if (err) { return error.sqlErr(res, err); }
         else { return res.status(204).send(); }
     });
@@ -56,7 +57,7 @@ exports.eventInfoPerEvent = function(req, res){
         + " active, event_type, amount, job_id"
         + " FROM calendar_events"
         + " WHERE event_id = ?", [event], function(err, results){
-        if (err) { return sqlErr(res, err); }
+        if (err) { return error.sqlErr(res, err); }
         else { return res.send(results); }
     });
 };
@@ -72,11 +73,11 @@ exports.eventInfoPerUser = function(req, res){
 
     if (!user) { return error.parameterErr(res, "Missing user_id parameter"); }
 
-    mysql.pool.query("SELECT start_datetime, end_datetime, title, notes, rep_stop_date, rep_day_month, rep_day_week,"
+    mysql.pool.query("SELECT event_id, start_datetime, end_datetime, title, notes, rep_stop_date, rep_day_month, rep_day_week,"
         + " active, event_type, amount, job_id"
         + " FROM calendar_events"
         + " WHERE user_id = ?", [user], function(err, results){
-        if (err) { return sqlErr(res, err); }
+        if (err) { return error.sqlErr(res, err); }
         else { return res.send(results); }
     });
 };
@@ -90,15 +91,16 @@ exports.eventInfoPerUser = function(req, res){
 exports.updateEvent = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
-    var e = eventInfoPrepper(req.body[0]);
+    var e = eventInfoPrepper(req.body);
 
     //Verify the minimum requirements for inserting have been met
     if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
 
     mysql.pool.query("UPDATE calendar_events"
     + " SET start_datetime=?, end_datetime=?, title=?, notes=?, rep_stop_date=?, rep_day_month=?, rep_day_week=?,"
-    + " event_type=?, amount=?, job_id=?",
-    [e.start, e.end, e.title, e.notes, e.stop_date, e.day_month, e.day_week, e.event_type, e.amount, e.job_id], function(err){
+    + " event_type=?, amount=?, job_id=?"
+    + " WHERE event_id=?",
+    [e.start, e.end, e.title, e.notes, e.stop_date, e.day_month, e.day_week, e.event_type, e.amount, e.job_id, e.event_id], function(err){
        if (err) { return error.sqlErr(res, err); }
        else { return res.status(204).send(); }
     });
@@ -118,6 +120,7 @@ function eventInfoPrepper(body){
     var end = (body.end_datetime) ? body.end_datetime : start;
     var title = (body.title) ? body.title : null;
     var notes = (body.notes) ? body.notes : null;
+    //var isFullDay = (body.isFullDay) ? body.isFullDay : null;
     var stop_date = (body.rep_stop_date) ? body.rep_stop_date : null;
     var day_month = (body.rep_day_month) ? body.rep_day_month : null;
     var day_week = (body.rep_day_week) ? body.rep_day_week : null;
@@ -132,6 +135,7 @@ function eventInfoPrepper(body){
         end : end,
         title : title,
         notes : notes,
+        //isFullDay : isFullDay,
         stop_date : stop_date,
         day_month : day_month,
         day_week : day_week,
