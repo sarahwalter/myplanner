@@ -9,7 +9,7 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$http', '$scope', '$rootScope', '$location', '$route', function($http, $scope, $rootScope, $location, $route) {
+.controller('View1Ctrl', ['$http', '$scope', '$rootScope', '$location', function($http, $scope, $rootScope, $location) {
      if(!$rootScope.globals.currentUser){$location.path('/login')}
      else{
         $http.get('/users/' + $rootScope.globals.currentUser.user_id, null).then(function(response){
@@ -18,18 +18,8 @@ angular.module('myApp.view1', ['ngRoute'])
         });
       
         $http.get('/calendar_events/user/' + $rootScope.globals.currentUser.user_id, null).then(function(response){
+            console.log(response);
             $scope.rules = response.data;
         });
-        
-        $scope.DeleteEvent = function(event_id){
-            console.log("in delete function");
-            console.log(event_id);
-            $http.delete('/calendar_events/' + event_id, null).then(function(response){
-                console.log("in delete function");
-                        /* Redirect to view1 page */
-                        $route.reload();
-            });
-        };
-            
      }
 }]);
