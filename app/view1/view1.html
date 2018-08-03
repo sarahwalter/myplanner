@@ -1,17 +1,89 @@
 <div ng-include src="'partials/navigation.html'"></div>
-<h2>Test User</h2>
-<div ng-repeat="user in users">
-    <ul>
-        <li>Name: {{user.first_name}} {{user.last_name}}</li>
-        <li>Email: {{user.email_address}}</li>
-    </ul>
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="icon-home icon-white"></i>Home</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/jobs">My Jobs</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Welcome! {{user}}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                        <a class="dropdown-item" (click)= "profile()">
+                            <i class="fa fa-user" style="color: #007bff"></i> Profile
+                        </a>
+                        <a class="dropdown-item" (click)= "logout()" >
+                            <i class="fa fa-sign-out" style="color: #007bff"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+<h4>Update Profile</h4>
+<hr>
+<div class="row">
+    <div class="col-md-3"></div>
+    <!-- edit form column -->
+    <div class="col-md-9 personal-info">
+
+        <form class="form-horizontal" role="form" method="post" (submit) = "updateUser($event)" >
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">First name :</label>
+                <div class="col-lg-8">
+                    <input class="form-control" name="fname" type="text"  ng-model="first" value="{{user.first_name}}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Last name :</label>
+                <div class="col-lg-8">
+                    <input class="form-control" name="lname" type="text"  ng-model="last" value="{{user.last_name}}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Email :</label>
+                <div class="col-lg-8">
+                    <input class="form-control" type="text" name="email"  ng-model="email" value="user.email_address">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">Password :</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="password" name="pwd"  [(ngModel)]="pwd1">
+                </div>
+            </div>
+
+     
+
+            <div class="form-group">
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-8">
+                    <input type="submit" class="btn btn-success" value="Update">
+                    <span></span>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
 </div>
-<h2>Test Event</h2>
-<div ng-repeat="rule in rules">
-    <ul>
-        <li>Title: {{rule.title}}</li>
-        <li>Start: {{rule.start_datetime}}</li>
-        <li>Notes: {{rule.notes}}</li>
-        <li><button type="button" class="btn btn-success" ng-click="DeleteEvent(rule.event_id)">Delete: {{rule.event_id}}</button>
-    </ul>
 </div>
+<hr>
+<footer class="py-5 bg-dark">
+<div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; My Planner 2018</p>
+</div>
+<!-- /.container -->
+</footer>
