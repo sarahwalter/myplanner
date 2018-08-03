@@ -11,7 +11,7 @@ angular.module('myApp.calendar', ['ngRoute'])
   });
 }])
 
-.controller('CalendarCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$window', '$location', function ($http, $scope, $rootScope, uiCalendarConfig, $window, $location) {
+.controller('CalendarCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$location', '$route', function ($http, $scope, $rootScope, uiCalendarConfig, $location, $route) {
 
         $scope.SelectedEvent = null;
         var isFirstTime = true;
@@ -22,6 +22,7 @@ angular.module('myApp.calendar', ['ngRoute'])
         $scope.createEvent = function(){
             $location.path('/eventForm');
         };
+        
         //Load events from server
         $http.get('/calendar-ui/'+ $rootScope.globals.currentUser.user_id, null).then(function (data) {
             $scope.events.splice(0, $scope.events.length);
@@ -35,6 +36,7 @@ angular.module('myApp.calendar', ['ngRoute'])
                 var userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
                 
                 $scope.events.push({
+                    event_id : value.event_id,
                     title: value.title,
                     description: value.notes,
                     start: new Date(dateStart.getTime() + userTimezoneOffset),
@@ -56,8 +58,7 @@ angular.module('myApp.calendar', ['ngRoute'])
                     addEvent: {
                     text: '+',
                     click: function() {
-                        //$location.path('/eventForm');
-                        $window.location.href = '#!/eventForm';
+                        $location.path('/eventForm');
                         }
                     }
                  },*/
@@ -77,5 +78,16 @@ angular.module('myApp.calendar', ['ngRoute'])
                 }*/
             }
         };
+        
+        $scope.deleteEvent = function(event_id){
+            console.log("in delete function");
+            console.log(event_id);
+            $http.delete('/calendar_events/' + event_id, null).then(function(response){
+                console.log("in delete function");
+                        /* Redirect to view1 page */
+                        $route.reload();
+            });
+        };
+        
     }]);
 
