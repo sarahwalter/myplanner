@@ -24,7 +24,9 @@ exports.createJob = function(req, res){
         [j.user, j.title, j.wage, j.frequency, j.filing, j.allowances, j.retirement, j.pretax, j.posttax, j.fed_tax_rate, j.loc_tax_rate],
         function(err){
             if (err) { return error.sqlErr(res, err); }
-            else { return res.status(201).send("Job Created"); }
+            else {
+
+                return res.status(201).send("Job Created"); }
         });
 };
 

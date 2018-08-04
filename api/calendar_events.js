@@ -15,6 +15,7 @@ exports.createEvent = function(req, res){
     var e = eventInfoPrepper(req.body);
 
     //Verify the minimum requirements for inserting have been met
+    console.log(e);
     if (!e.user || !e.start || !e.title) { return error.parameterErr(res, "Missing required fields"); }
     console.log(e);
     mysql.pool.query("INSERT INTO calendar_events (user_id, start_datetime, end_datetime, title, notes, rep_stop_date,"

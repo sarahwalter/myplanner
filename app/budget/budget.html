@@ -1,0 +1,41 @@
+<div ng-include src="'partials/navigation.html'"></div>
+<h1>Budget Breakdown</h1>
+<div class="row">
+    <span class="col col-2">Select a Year/Month:</span>
+    <md-datepicker class="col col-3" ng-model="selectedDate" md-mode="month" ng-change="getEvents()"></md-datepicker>
+</div>
+<h2>Income</h2>
+<div class="row">
+    <span class="col col-4">Title</span>
+    <span class="col col-2">Amount</span>
+    <span class="col col-4">Income Date</span>
+</div>
+<div class="row" ng-repeat="income in incomeEvents">
+    <span class="col col-4">{{income.title}}</span>
+    <span class="col col-2">${{income.amount}}</span>
+    <span class="col col-4">{{income.start_datetime}}</span>
+</div>
+
+<h2>Expenses</h2>
+<div class="row">
+    <span class="col col-4">Title</span>
+    <span class="col col-2">Expense Amount</span>
+    <span class="col col-4">Due Date</span>
+</div>
+<div class="row" ng-repeat="expense in expenseEvents">
+    <span class="col col-4">{{expense.title}}</span>
+    <span class="col col-2">${{expense.amount}}</span>
+    <span class="col col-4">{{expense.start_datetime}}</span>
+</div>
+
+<h2>Totals</h2>
+<div class="row">
+    <span class="col col-4">Total Income</span>
+    <span class="col col-2">Total Expenses</span>
+    <span class="col col-2">Free Budget</span>
+</div>
+<div class="row">
+    <span class="col col-4">${{totalIncome}}</span>
+    <span class="col col-2">${{totalExpenses}}</span>
+    <span class="col col-2">${{unallocated}}</span>
+</div>

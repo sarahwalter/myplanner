@@ -11,6 +11,7 @@ angular.module('myApp', [
   'myApp.register',
   'myApp.login',
   'myApp.calendar',
+  'myApp.budget',
   'myApp.version',
   'myApp.logout',
   'myApp.navigation',
