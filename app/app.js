@@ -17,7 +17,8 @@ angular.module('myApp', [
   'myApp.navigation',
   'myApp.paycheck_estimator',
   'ui.calendar',
-  'myApp.event'
+  'myApp.event',
+  'myApp.jobs'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
