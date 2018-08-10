@@ -28,3 +28,12 @@
   text-align: center;
   padding-top: 1em;
 }
+
+.content{
+   margin-top:70px;
+ }
+ @media(max-width: 768px){
+   .content{
+     margin-top:180px;
+    }
+ }

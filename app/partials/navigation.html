@@ -1,4 +1,56 @@
-<ul class="menu" ng-controller = "navigationCtrl">
+<div ng-controller = "navigationCtrl">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#!/landing"><i class="icon-home icon-white"></i>Home</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/jobs">My Jobs</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/view1">Profile</a>
+                </li>
+                <li ng-if = "!isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/register">Sign Up</a>
+                </li>
+                <li ng-if = "!isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/login">Login</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/calendar">Calendar</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/paycheck_estimator">Paycheck Estimator</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/budget">Budget</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/logout">Logout</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Welcome! {{user}}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                        <a  class="dropdown-item" (click)= "profile()">
+                            <i class="fa fa-user" style="color: #007bff"></i> Profile
+                        </a>
+                        <a class="dropdown-item" (click)= "logout()" >
+                            <i class="fa fa-sign-out" style="color: #007bff"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+
+<!--<ul class="menu" ng-controller = "navigationCtrl">
     <li><a href="#!/landing">Landing</a></li>
     <li ng-if = "isLoggedIn"><a href="#!/view1">View1</a></li>
     <li ng-if = "!isLoggedIn"><a href="#!/register">Sign Up</a></li>
@@ -7,4 +59,4 @@
     <li ng-if = "isLoggedIn"><a href="#!/paycheck_estimator">Paycheck Estimator</a> </li>
     <li ng-if = "isLoggedIn"><a href="#!/logout">Logout</a></li>
     <li ng-if = "isLoggedIn"><a href="#!/budget">Budget</a></li>
-  </ul>
+  </ul>-->
