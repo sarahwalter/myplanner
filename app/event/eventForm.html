@@ -5,28 +5,51 @@
 <div class="container-fluid">
     <form>
         <div class="form-group">
-            <label for="event-title">Event Title</label>
-            <input id="event-title" class="form-control" ng-model="eventTitle" type="text" placeholder="Title">
+            <label for="event-type">Type of Event</label>
+            <div class="form-group">
+                <select id="event-type" ng-model="eventType">
+                    <option value="event">Event</option>
+                    <option value="expense">Expense</option>
+                    <option value="income" disabled="disabled">Income (Coming Soon)</option>
+                </select>
+            </div>
+            <div ng-switch on="eventType">
+                <div class="form-group">
+                    <label  for="event-title">Event Title</label>
+                    <input id="event-title" class="form-control" ng-model="eventTitle" type="text" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Date of Event</label>
+                    <md-datepicker id="event-date" ng-model="eventDate" md-placeholder="Enter Date"></md-datepicker>
+                    <label ng-switch-when = "event" for="event-time">Time of Event</label>
+                    <input ng-switch-when = "event" id="event-time" type="time" ng-model="eventTime">
+                </div>
+                <div class="form-group" ng-switch-when = "event">
+                    <label for="event-note">Notes</label>
+                    <textarea id="event-note" class="form-control"  ng-model="eventNote" type="text" rows="3"></textarea>
+                </div>
+                <div class="form-group" ng-switch-when = "expense|income" ng-switch-when-separator="|">
+                    <label for = "amount">Amount</label>
+                    <input type="number" class="form-control" ng-model = "amount" placeholder="Amount" step="0.01" min="0">
+                </div>
+                <div class="form-group" ng-switch-when = "expense|income" ng-switch-when-separator="|">
+                    <label for="rep_day_week">Repeats Weekly On</label>
+                    <select id="rep_day_week" ng-model="rep_day_week">
+                        <option value="Sunday">Sunday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                    </select> 
+                </div>
+                <div class="form-group" ng-switch-when = "expense|income" ng-switch-when-separator="|">
+                    <label for = "rep_day_month">Repeats Monthly On</label>
+                    <input type="number" class="form-control" ng-model = "rep_day_month" step="1" min="0" max="31">
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="event-date">Date of Event</label>
-            <md-datepicker id="event-date" ng-model="eventDate" md-placeholder="Enter Date"></md-datepicker>
-            <label for="event-time">Time of Event</label>
-            <input id="event-time" type="time" ng-model="eventTime">
-        </div>
-        <div class="form-group">
-            <label for="event-note">Notes</label>
-            <textarea id="event-note" class="form-control"  ng-model="eventNote" type="text" rows="3"></textarea>
-        </div>
-        <label for="event-type">Type of Event</label>
-        <div class="form-group">
-            <select id="event-type" ng-model="eventType">
-                <option value="event">Event</option>
-                <option value="expense" disabled="disabled">Expense (Coming Soon)</option>
-                <option value="income" disabled="disabled">Income (Coming Soon)</option>
-            </select>
-        </div>
-
         <button type="button" class="btn btn-success" ng-click="submitEvent()">Submit Event</button>
     </form>
 </div>
