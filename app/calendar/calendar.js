@@ -11,13 +11,14 @@ angular.module('myApp.calendar', ['ngRoute'])
   });
 }])
 
-.controller('CalendarCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$location', '$route', '$window', '$injector', '$compile',
-    function ($http, $scope, $rootScope, uiCalendarConfig, $location, $route, $window, $injector, $compile) {
+.controller('CalendarCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$location', '$route', '$window',
+    function ($http, $scope, $rootScope, uiCalendarConfig, $location, $route, $window) {
 
     function init(){
         $scope.getEvents();
     }
 
+    const MONTH = "m", WEEK = "w", DAY = "d";
     const weekdayNumberConversion  = {
         "Sunday" : 0,
         "Monday" : 1,
@@ -32,9 +33,11 @@ angular.module('myApp.calendar', ['ngRoute'])
     let isFirstTime = true;
     let userID = $rootScope.globals.currentUser.user_id;
     $scope.events = [];
+    $scope.selectedViewType = MONTH;
     $scope.eventSources = [$scope.events];
     $scope.selectedDate = new Date(Date.now());
     $scope.calledOnce = false;
+
     $scope.createEvent = function(){
         $location.path('/eventForm');
     };
@@ -44,12 +47,15 @@ angular.module('myApp.calendar', ['ngRoute'])
         $http.get('/calendar_events/user/'+ userID, null).then(function (response) {
             $scope.events.splice(0, $scope.events.length);
             let rawEvents = response.data;
+
+            //Only jump into this if-block on the initial page load ...
             if (!$scope.calledOnce) {
                 $scope.calledOnce = true;
                 $scope.m = $('#calendar').fullCalendar('getCalendar').moment();
                 $scope.selectedDate = new Date($scope.m._d);
-                $window.addEventListener("DOMContentLoaded", $scope.increaseMonth());
-                $window.addEventListener("DOMContentLoaded", $scope.decreaseMonth());
+                $window.addEventListener("DOMContentLoaded", $scope.changeSelectedViewType());
+                $window.addEventListener("DOMContentLoaded", $scope.increase());
+                $window.addEventListener("DOMContentLoaded", $scope.decrease());
             }
             console.log($scope.selectedDate);
             prepareEventsArray(rawEvents);
@@ -116,23 +122,59 @@ angular.module('myApp.calendar', ['ngRoute'])
         });
     };
 
-    $scope.increaseMonth = function() {
+    $scope.changeSelectedViewType = function(){
+        if (angular.element('.fc-month-button')[0] !== null){
+            document.getElementsByClassName('fc-month-button')[0].addEventListener("click", function(){
+                $scope.selectedViewType = MONTH;
+            });
+        }
+        if (angular.element('.fc-month-button')[0] !== null){
+            document.getElementsByClassName('fc-agendaWeek-button')[0].addEventListener("click", function(){
+                $scope.selectedViewType = WEEK;
+            });
+        }
+        if (angular.element('.fc-month-button')[0] !== null){
+            document.getElementsByClassName('fc-agendaDay-button')[0].addEventListener("click", function(){
+                $scope.selectedViewType = DAY;
+            });
+        }
+    };
+
+    $scope.increase = function() {
         if (angular.element('.fc-next-button')[0] !== null){
             document.getElementsByClassName('fc-next-button')[0].addEventListener("click", function(){
-                $scope.selectedDate.setMonth($scope.selectedDate.getMonth()+1);
+                if ($scope.selectedViewType === MONTH){
+                    $scope.selectedDate.setMonth($scope.selectedDate.getMonth()+1);
+                }
+                else if ($scope.selectedViewType === WEEK){
+                    $scope.selectedDate.setDate($scope.selectedDate.getDate()+7);
+                }
+                else if ($scope.selectedViewType === DAY){
+                    $scope.selectedDate.setDate($scope.selectedDate.getDate()+1);
+                }
                 $scope.getEvents();
             });
         }
     };
 
-    $scope.decreaseMonth = function(){
+    $scope.decrease = function(){
         if (angular.element('.fc-prev-button')[0] !== null){
             document.getElementsByClassName('fc-prev-button')[0].addEventListener("click", function(){
-                $scope.selectedDate.setMonth($scope.selectedDate.getMonth()-1);
+                if ($scope.selectedViewType === MONTH){
+                    $scope.selectedDate.setMonth($scope.selectedDate.getMonth()-1);
+                }
+                else if ($scope.selectedViewType === WEEK){
+                    $scope.selectedDate.setDate($scope.selectedDate.getDate()-7);
+                }
+                else if ($scope.selectedViewType === DAY){
+                    $scope.selectedViewType.setDate($scope.selectedDate.getDate()-1);
+                }
                 $scope.getEvents();
             });
         }
     };
+
+
         /*****************TESTING**************/
      /*******************************************************************************
      * Name: prepareEventsArray
