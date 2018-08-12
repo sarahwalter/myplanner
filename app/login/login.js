@@ -26,12 +26,14 @@ angular.module('myApp.login', ['ngRoute'])
                     /* Send post request to server */  
                     $http.post("/users", toSend)
                     .then(function successful(response){
+                        console.log(response);
                         /* If successful */
                         /* Create global variable for currentUser */
                         $rootScope.globals = {
                             currentUser : {
-                                username: response.data.username,
-                                user_id: response.data.user_id
+                                username: response.data.email,
+                                user_id: response.data.user_id,
+                                name: response.data.name
                             }
                         };
                         

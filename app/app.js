@@ -5,7 +5,7 @@ angular.module('myApp', [
   'ngRoute',
   'ngMessages',
   'ngCookies',
-  'myApp.view1',
+  'myApp.profile',
   'myApp.view2',
   'myApp.landing',
   'myApp.register',
@@ -23,7 +23,7 @@ angular.module('myApp', [
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
 
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/calendar'});
 }]).
 run(['$rootScope', '$location', '$http', '$cookies', function($rootScope, $location, $http, $cookies) {
   $rootScope.globals = $cookies.getObject('globals') || {};

@@ -16,7 +16,7 @@ exports.authenticateUser = function(req, res){
     console.log(u);
     /* Check if first and last are undefined = LOGIN */
     if (u.first == undefined && u.last == undefined) {
-        mysql.pool.query("SELECT * FROM users WHERE email_address = ?", [u.email], function(err, results){
+        mysql.pool.query("SELECT user_id, first_name, last_name, email_address, password_hash FROM users WHERE email_address = ?", [u.email], function(err, results){
         if(err) {  return error.sqlErr(results, err); }
         else {
             var numRows = results.length;
@@ -28,7 +28,7 @@ exports.authenticateUser = function(req, res){
                 if(match){
                     console.log("passwords match");
                     /* Send user credentials */
-                var credentials = { username: u.email, user_id: results[0].user_id};
+                var credentials = { email: u.email, user_id: results[0].user_id, name: results[0].first_name + " " + results[0].last_name};
                 res.send(credentials);
                 }
                 else {
