@@ -94,14 +94,27 @@ exports.deleteUser = function(req, res){
  **************************************************/
 exports.updateUser = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
-
-    var u = userInfoPrepper(req.body);
-
-    if (!u.first || !u.last || !u.email || !u.password) { return error.parameterErr(res, "Missing required fields"); }
-    mysql.pool.query("UPDATE users SET first=?, last=?, email=?, password=?", [u.first, u.last, u.email, u.password], function(err){
-        if (err) { error.sqlErr(res, err); }
-        else { res.status(204).send(); }
-    })
+    console.log(req.body);
+    let u = userInfoPrepper(req.body);
+    if (u.password) {
+        bcrypt.hash(u.password, SALT_ROUNDS).then(function(hashedPassword){
+            mysql.pool.query("UPDATE users"
+                + " SET first_name=(IFNULL(?, first_name)), last_name=(IFNULL(?, last_name)), email_address=(IFNULL(?, email_address)), password_hash=(IFNULL(?, password_hash))"
+                + " WHERE user_id = ?",
+                [u.first, u.last, u.email, hashedPassword, u.id], function(err){
+                    if (err) { error.sqlErr(res, err); }
+                    else { res.status(204).send(); }
+                })
+        });
+    } else {
+        mysql.pool.query("UPDATE users"
+            + " SET first_name=(IFNULL(?, first_name)), last_name=(IFNULL(?, last_name)), email_address=(IFNULL(?, email_address))"
+            + " WHERE user_id = ?",
+            [u.first, u.last, u.email, u.id], function(err){
+                if (err) { error.sqlErr(res, err); }
+                else { res.status(204).send(); }
+            })
+    }
 };
 
 /***************************************************
@@ -130,12 +143,14 @@ exports.userInfo = function(req, res){
  *************************************************/
 function userInfoPrepper(body){
     //No tuple vars since all are required and undefined will be caught in validation as well
-    var first = body.first_name;
-    var last = body.last_name;
-    var email = body.email_address;
-    var password = body.password;
+    let id = body.user_id;
+    let first = (body.first_name !== "" && body.first_name !== null) ? body.first_name : null;
+    let last = (body.last_name !== "" && body.last_name !== null) ? body.last_name : null;
+    let email = (body.email_address !== "" && body.email_address !== null) ? body.email_address : null;
+    let password = (body.password !== "" && body.password !== null) ? body.password : null;
 
     return {
+        id : id,
         first : first,
         last : last,
         email : email,

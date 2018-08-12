@@ -7,48 +7,38 @@
     <div class="col-md-3"></div>
     <!-- edit form column -->
     <div class="col-md-9 personal-info">
-
-        <form class="form-horizontal" role="form" method="post" (submit) = "updateUser($event)" >
-
+        <form class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">First name :</label>
                 <div class="col-lg-8">
-                    <input class="form-control" name="fname" type="text"  ng-model="first" value="{{user.first_name}}">
+                    <input class="form-control" type="text" ng-model="user.first_name">
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-lg-3 control-label">Last name :</label>
                 <div class="col-lg-8">
-                    <input class="form-control" name="lname" type="text"  ng-model="last" value="{{user.last_name}}">
+                    <input class="form-control" type="text" ng-model="user.last_name">
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-lg-3 control-label">Email :</label>
                 <div class="col-lg-8">
-                    <input class="form-control" type="text" name="email"  ng-model="email" value="user.email_address">
+                    <input class="form-control" type="text" ng-model="user.email_address">
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-md-3 control-label">Password :</label>
                 <div class="col-md-8">
-                    <input class="form-control" type="password" name="pwd"  [(ngModel)]="pwd1">
+                    <input class="form-control" type="password" ng-model="changedPass">
                 </div>
             </div>
-
-     
-
             <div class="form-group">
                 <label class="col-md-3 control-label"></label>
                 <div class="col-md-8">
-                    <input type="submit" class="btn btn-success" value="Update">
+                    <input type="submit" class="btn btn-success" ng-click="update()">
                     <span></span>
-
                 </div>
             </div>
-
         </form>
     </div>
 </div>

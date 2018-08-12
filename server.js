@@ -30,19 +30,19 @@ app.post('/calendar_events', calendar_events.createEvent);
 app.delete('/calendar_events/:event_id', calendar_events.deleteEvent);
 app.get('/calendar_events/event/:event_id', calendar_events.eventInfoPerEvent);
 app.get('/calendar_events/user/:user_id', calendar_events.eventInfoPerUser);
-app.patch('/calendar_events/:event_id', calendar_events.updateEvent);
+app.patch('/calendar_events', calendar_events.updateEvent);
 
 //JOBS CALLS
 app.post('/jobs', jobs.createJob);
 app.delete('/jobs/:job_id', jobs.deleteJob);
 app.get('/jobs/:user_id', jobs.jobInfoPerUser);
-app.patch('/jobs/:job_id', jobs.updateJob);
+app.patch('/jobs', jobs.updateJob);
 
 //USER CALLS
 app.post('/users', users.authenticateUser);
 app.delete('/users/:user_id', users.deleteUser);
 app.get('/users/:user_id', users.userInfo);
-app.patch('/users/:user_id', users.updateUser);
+app.patch('/users/', users.updateUser);
 
 
 // Start the app by listening on the default Heroku port
