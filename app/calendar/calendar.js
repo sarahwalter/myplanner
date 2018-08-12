@@ -196,8 +196,8 @@ angular.module('myApp.calendar', ['ngRoute'])
             let selectedMonth = $scope.selectedDate.getMonth();
             let selectedYear = $scope.selectedDate.getFullYear();
 
-            if((start.getFullYear() > selectedYear || start.getMonth() > selectedMonth)
-                || (stop && ((stop.getFullYear() < selectedYear) || (stop.getFullYear() === selectedYear && stop.getMonth() < selectedMonth)))){
+            if((start.getFullYear() > selectedYear || (start.getFullYear() === selectedYear && start.getMonth() > selectedMonth))
+                || (stop !== null && ((stop.getFullYear() < selectedYear) || (stop.getFullYear() === selectedYear && stop.getMonth() < selectedMonth)))){
                 toRemove.push(event.event_id);
             }
         });
@@ -246,7 +246,8 @@ angular.module('myApp.calendar', ['ngRoute'])
         let eventStorage = [];
         while (tmpDate.getMonth() === month){
             //If the day of week matches, create a duplicate event in storage and change the start date to the discovered date
-            if (tmpDate.getDay() === weekdayNumberConversion[event.rep_day_week]) {
+            if (tmpDate.getDay() === weekdayNumberConversion[event.rep_day_week]
+            && tmpDate <= new Date(event.rep_stop_date)) {
                 let tmpEvent = Object.assign({}, event); //Cloning object so it doesn't alter existing ones
                 tmpEvent.start_datetime = tmpDate.getFullYear() + "-" + (tmpDate.getMonth()+1) + "-" + tmpDate.getDate();
                 eventStorage.push(tmpEvent);
