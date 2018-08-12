@@ -22,11 +22,9 @@ angular.module('myApp.login', ['ngRoute'])
                       email_address : $scope.email,
                       password : $scope.password
                       };
-                      console.log(toSend);
                     /* Send post request to server */  
                     $http.post("/users", toSend)
                     .then(function successful(response){
-                        console.log(response);
                         /* If successful */
                         /* Create global variable for currentUser */
                         $rootScope.globals = {
