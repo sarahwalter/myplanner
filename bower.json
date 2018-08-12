@@ -17,6 +17,6 @@
     "angular-ui-calendar": "^1.0.2"
   },
   "resolutions": {
-    "angular": "1.7.2"
+    "angular": "^1.7.2"
   }
 }
