@@ -9,8 +9,9 @@ angular.module('myApp.budget', ['ngRoute', 'ngMaterial'])
         });
     }])
 
-    .controller('BudgetCtrl', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
-        if(!$rootScope.globals.currentUser){ $location.path('/login'); }
+    .controller('BudgetCtrl', ['$http', '$scope', '$rootScope', '$location', function ($http, $scope, $rootScope, $location) {
+        if(!$rootScope.globals.currentUser){ $location.path('/login') }
+
         const weekdayNumberConversion  = {
             "Sunday" : 0,
             "Monday" : 1,

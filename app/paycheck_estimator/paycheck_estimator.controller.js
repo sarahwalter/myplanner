@@ -9,7 +9,7 @@ angular.module('myApp.paycheck_estimator', ['ngRoute', 'ngMaterial'])
         });
     }])
 
-    .controller('PaychkCtrl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope){
+    .controller('PaychkCtrl', ['$http', '$scope', '$rootScope', '$location', function($http, $scope, $rootScope, $location){
         if(!$rootScope.globals.currentUser){$location.path('/login')}
         else{
             const HOURLY = 2080, WEEKLY = 52, MONTHLY = 12, ANNUALLY = 1, BIWEEKLY = 26, BIMONTHLY = 24;

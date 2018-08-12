@@ -13,6 +13,7 @@ angular.module('myApp.calendar', ['ngRoute'])
 
 .controller('CalendarCtrl', ['$http', '$scope', '$rootScope', 'uiCalendarConfig', '$location', '$route', '$window',
     function ($http, $scope, $rootScope, uiCalendarConfig, $location, $route, $window) {
+    if(!$rootScope.globals.currentUser){$location.path('/login')}
 
     function init(){
         $scope.getEvents();
