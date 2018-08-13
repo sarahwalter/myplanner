@@ -10,7 +10,7 @@
                 <select id="event-type" ng-model="eventType">
                     <option value="event">Event</option>
                     <option value="expense">Expense</option>
-                    <option value="income" disabled="disabled">Income (Coming Soon)</option>
+                    <option value="income">Income</option>
                 </select>
             </div>
             <div ng-switch on="eventType">
@@ -19,22 +19,32 @@
                     <input id="event-title" class="form-control" ng-model="eventTitle" type="text" placeholder="Title">
                 </div>
                 <div class="form-group">
-                    <label for="event-date">Date of Event</label>
+                    <label for="event-date">Date of {{eventType}}</label>
                     <md-datepicker id="event-date" ng-model="eventDate" md-placeholder="Enter Date"></md-datepicker>
-                    <label ng-switch-when = "event" for="event-time">Time of Event</label>
-                    <input ng-switch-when = "event" id="event-time" type="time" ng-model="eventTime">
+                    <label style="margin-left:10px;" ng-switch-when="event" for="event-time">Time Start</label>
+                    <input ng-switch-when="event" id="event-time" type="time" ng-disabled="all_day" ng-model="eventTime">
+                    <label style="margin-left:10px;" for="all-day">All Day</label>
+                    <input id="all-day" type="checkbox" ng-model="all_day"
+                           ng-disabled="eventType === 'income' || eventType === 'expense'" ng-checked="eventType === 'income' || eventType === 'expense'">
                 </div>
-                <div class="form-group" ng-switch-when = "event">
+                <div class="form-group">
+                    <label for="event-date" ng-switch-when="event">End of {{eventType}}</label>
+                    <md-datepicker id="end-date" ng-switch-when="event" ng-model="endDate" md-placeholder="End Date"></md-datepicker>
+                    <label style="margin-left:10px;" ng-switch-when="event" for="end-time">Time End</label>
+                    <input ng-switch-when="event" id="end-time" type="time" ng-disabled="all_day" ng-model="endTime">
+                </div>
+                <div class="form-group">
                     <label for="event-note">Notes</label>
-                    <textarea id="event-note" class="form-control"  ng-model="eventNote" type="text" rows="3"></textarea>
+                    <textarea id="event-note" class="form-control" ng-model="eventNote" type="text" rows="3"></textarea>
                 </div>
-                <div class="form-group" ng-switch-when = "expense|income" ng-switch-when-separator="|">
-                    <label for = "amount">Amount</label>
-                    <input type="number" class="form-control" ng-model = "amount" placeholder="Amount" step="0.01" min="0">
+                <div class="form-group" ng-switch-when="expense|income" ng-switch-when-separator="|">
+                    <label for="amount">Amount</label>
+                    <input id="amount" type="number" class="form-control" style="display:inline-block; width:150px;" ng-model="amount" placeholder="Amount" step="0.01" min="0">
                 </div>
-                <div class="form-group" ng-switch-when = "expense|income" ng-switch-when-separator="|">
+                <div class="form-group">
                     <label for="rep_day_week">Repeats Weekly On</label>
-                    <select id="rep_day_week" ng-model="rep_day_week">
+                    <select id="rep_day_week" class="form-control" style="display:inline-block; width:150px;" ng-model="rep_day_week" ng-disabled="rep_day_month">
+                        <option value=""></option>
                         <option value="Sunday">Sunday</option>
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
@@ -42,11 +52,11 @@
                         <option value="Thursday">Thursday</option>
                         <option value="Friday">Friday</option>
                         <option value="Saturday">Saturday</option>
-                    </select> 
-                </div>
-                <div class="form-group" ng-switch-when = "expense|income" ng-switch-when-separator="|">
-                    <label for = "rep_day_month">Repeats Monthly On</label>
-                    <input type="number" class="form-control" ng-model = "rep_day_month" step="1" min="0" max="31">
+                    </select>
+                    <label style="margin-left:10px;" for="rep_day_month">Repeats Monthly On</label>
+                    <input id="rep_day_month" class="form-control" style="display:inline-block; width:80px;" ng-disabled="rep_day_week" type="number" ng-model="rep_day_month" step="1" min="1" max="31">
+                    <label style="margin-left:10px;" for="rep_stop_date">Stop Repeating</label>
+                    <md-datepicker id="rep_stop_date" ng-model="rep_stop_date" ng-disabled="!rep_day_week && !rep_day_month" md-placeholder="Stop Date"></md-datepicker>
                 </div>
             </div>
         </div>
