@@ -61,19 +61,26 @@ angular.module('myApp.calendar', ['ngRoute'])
             rawEvents.forEach(function(event) {
                 /* Timezone fix for date */
                 /* https://stackoverflow.com/questions/17545708/parse-date-without-timezone-javascript */
-                let dateStart = new Date(event.start_datetime);
-                let dateEnd = (event.end_datetime) ? new Date(event.end_datetime) : dateStart;
-                if (!event.end_datetime) { event.isFullDay = "true"; }
-                let userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
+                let dateStart = event.start_datetime;
+                let timeStart = new Date(dateStart).getTime();
+                let dateEnd = (event.end_datetime) ? event.end_datetime : dateStart;
+                let timeEnd = (event.isFullDay) ? null : new Date(dateEnd).getTime()
+                //let userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
                 let fullDay = event.isFullDay;
                 $scope.events.push({
                     event_id : event.event_id,
                     title: event.title,
                     description: event.notes,
-                    start: new Date(dateStart.getTime() + userTimezoneOffset),
-                    end: new Date(dateEnd.getTime() + userTimezoneOffset),
+                    start: dateStart,
+                    end: dateEnd,
                     allDay : fullDay,
-                    stick: true
+                    stick: true,
+                    date_start: dateStart,
+                    time_start: timeStart,
+                    date_end: dateEnd,
+                    time_end: timeEnd,
+                    event_type: event.event_type,
+                    amount: event.amount
                 });
             });
         });
@@ -247,8 +254,8 @@ angular.module('myApp.calendar', ['ngRoute'])
             if (tmpDate.getDay() === weekdayNumberConversion[event.rep_day_week]
             && tmpDate <= new Date(event.rep_stop_date)) {
                 let tmpEvent = Object.assign({}, event); //Cloning object so it doesn't alter existing ones
-                tmpEvent.start_datetime = tmpDate.getFullYear() + "-" + (tmpDate.getMonth()+1) + "-" + tmpDate.getDate();
-                tmpEvent.end_datetime = tmpDate.getFullYear() + "-" + (tmpDate.getMonth()+1) + "-" + tmpDate.getDate();
+                tmpEvent.start_datetime = new Date(tmpDate.getFullYear(),tmpDate.getMonth(),tmpDate.getDate());
+                tmpEvent.end_datetime = new Date(tmpDate.getFullYear(),tmpDate.getMonth(),tmpDate.getDate());
                 eventStorage.push(tmpEvent);
             }
             tmpDate.setDate(tmpDate.getDate()+1);

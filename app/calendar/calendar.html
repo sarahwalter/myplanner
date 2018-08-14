@@ -10,9 +10,32 @@
         </div>
         <div class="row">
             <div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:50px">
-                <h2>Selected Event:</h2>
-                <h3 style="color:#A9A50E">{{SelectedEvent.title}}</h3>
-                <p>{{SelectedEvent.description}}</p>
+                <h2>Selected Event</h2>
+                <div class="row">
+                    <label><b>Title: </b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.title}}</span>
+                </div>
+                <div class="row">
+                    <label><b>Date: </b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.date_start | date: 'mediumDate'}}</span>
+                </div>
+                <div class="row">
+                    <label><b>Time Start:</b></label>
+                    <span style="padding-left: 10px;" ng-show="SelectedEvent.allDay == false">{{SelectedEvent.time_start | date: 'shortTime'}}</span>
+                    <span style="padding-left: 10px;" ng-show="SelectedEvent.allDay == true">All Day</span>
+                </div>
+                <div class="row" ng-show="SelectedEvent.allDay == false">
+                    <label><b>Time End:</b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.time_end | date: 'shortTime'}}</span>
+                </div>
+                <div class="row">
+                    <label><b>Notes: </b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.description}}</span>
+                </div>
+                <div class="row" ng-hide="SelectedEvent.event_type === 'event'">
+                    <label><b>{{SelectedEvent.event_type}}: </b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.amount}}</span>
+                </div>
                 <button type="button" class="btn btn-success" ng-click="deleteEvent(SelectedEvent.event_id)">Delete</button>
             </div>
         </div>
