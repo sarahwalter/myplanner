@@ -1,0 +1,42 @@
+<div ng-controller = "navigationCtrl">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#!/landing"><i class="icon-home icon-white"></i>Home</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li ng-if = "!isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/register">Sign Up</a>
+                </li>
+                <li ng-if = "!isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/login">Login</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/calendar">Calendar</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/jobs">My Jobs</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/paycheck_estimator">Paycheck Estimator</a>
+                </li>
+                <li ng-if = "isLoggedIn" class = "nav-item">
+                    <a class="nav-link" href="#!/budget">Budget</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="cursor:pointer;" data-target="#dropdown-list" data-toggle="collapse" role="button" onmouseover="">{{first_last}}</a>
+                    <div id="dropdown-list" class="dropdown-menu dropdown-menu-right collapse">
+                        <ul>
+                            <li><a class="dropdown-item" href="#!/profile"><i class="fa fa-user" style="color: #007bff"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="#!/logout"><i class="fa fa-sign-out" style="color: #007bff"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>

@@ -1,0 +1,66 @@
+<div ng-include src="'partials/navigation.html'"></div>
+<div class="content">
+<h1>Create Event</h1>
+<div ng-if="errorMessage">{{ errorMessage }}</div>
+<div class="container-fluid">
+    <form>
+        <div class="form-group">
+            <label for="event-type">Type of Event</label>
+            <div class="form-group">
+                <select id="event-type" ng-model="eventType">
+                    <option value="event">Event</option>
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                </select>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label  for="event-title">Event Title</label>
+                    <input id="event-title" class="form-control" ng-model="eventTitle" type="text" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Date of {{eventType}}</label>
+                    <md-datepicker id="event-date" ng-model="eventDate" md-placeholder="Enter Date"></md-datepicker>
+                    <label style="margin-left:10px;" ng-show="eventType === 'event'" for="event-time">Time Start</label>
+                    <input id="event-time" type="time" ng-show="eventType === 'event'" ng-disabled="all_day" ng-model="eventTime">
+                    <label style="margin-left:10px;" for="all-day">All Day</label>
+                    <input id="all-day" type="checkbox" ng-model="all_day"
+                           ng-disabled="eventType === 'income' || eventType === 'expense'" ng-checked="eventType === 'income' || eventType === 'expense'">
+                </div>
+                <div class="form-group" ng-show="eventType === 'event'">
+                    <label for="event-date">End of {{eventType}}</label>
+                    <md-datepicker id="end-date" ng-model="endDate" md-placeholder="End Date"></md-datepicker>
+                    <label style="margin-left:10px;" for="end-time">Time End</label>
+                    <input id="end-time" type="time"ng-disabled="all_day" ng-model="endTime">
+                </div>
+                <div class="form-group">
+                    <label for="event-note">Notes</label>
+                    <textarea id="event-note" class="form-control" ng-model="eventNote" type="text" rows="3"></textarea>
+                </div>
+                <div class="form-group" ng-hide="eventType === 'event'">
+                    <label for="amount">Amount</label>
+                    <input id="amount" type="number" class="form-control" style="display:inline-block; width:150px;" ng-model="amount" placeholder="Amount" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="rep_day_week">Repeats Weekly On</label>
+                    <select id="rep_day_week" class="form-control" style="display:inline-block; width:150px;" ng-model="rep_day_week" ng-disabled="rep_day_month">
+                        <option value=""></option>
+                        <option value="Sunday">Sunday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                    </select>
+                    <label style="margin-left:10px;" for="rep_day_month">Repeats Monthly On</label>
+                    <input id="rep_day_month" class="form-control" style="display:inline-block; width:80px;" ng-disabled="rep_day_week" type="number" ng-model="rep_day_month" step="1" min="1" max="31">
+                    <label style="margin-left:10px;" for="rep_stop_date">Stop Repeating</label>
+                    <md-datepicker id="rep_stop_date" ng-model="rep_stop_date" ng-disabled="!rep_day_week && !rep_day_month" md-placeholder="Stop Date"></md-datepicker>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" ng-click="submitEvent()">Submit Event</button>
+    </form>
+</div>
+</div>

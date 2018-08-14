@@ -1,0 +1,26 @@
+<div ng-include src="'partials/navigation.html'"></div>
+<div class="content">
+<div ng-if="errorMessage">{{ errorMessage }}</div>
+<form>
+    <!-- First Name --> 
+	<div class="form-group">
+		<label>First Name</label>
+		<input type="text" name="first" id="first" class="form-control" ng-model="first"/>
+	</div>
+	<!-- Last Name --> 
+	<div class="form-group">
+		<label>Last Name</label>
+		<input type="text" name="last" id="last" class="form-control" ng-model="last" />
+	</div>
+	<!-- Email --> 
+	<div class="form-group">
+		<label>Email</label>
+		<input type="email" name="email" id="email" class="form-control" ng-model="email"/>
+	</div>
+	<!-- Password --> 
+	<div class="form-group">
+		<label>Password</label>
+		<input type="password" name="password" id="password" class="form-control" ng-model="password"/>
+	<button type="button" class="btn btn-success" ng-click="submitRegister()">Submit</button>
+</form>
+</div>

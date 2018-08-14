@@ -1,0 +1,44 @@
+<div ng-include src="'partials/navigation.html'"></div>
+<div class="content">
+<div class="row">
+    <div class="col-md-8">
+        <div id="calendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <button type="button" class="btn btn-success" ng-click="createEvent()">Add Event</button>
+        </div>
+        <div class="row">
+            <div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:50px">
+                <h2>Selected Event</h2>
+                <div class="row">
+                    <label><b>Title: </b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.title}}</span>
+                </div>
+                <div class="row">
+                    <label><b>Date: </b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.date_start | date: 'mediumDate'}}</span>
+                </div>
+                <div class="row">
+                    <label><b>Time Start:</b></label>
+                    <span style="padding-left: 10px;" ng-show="SelectedEvent.allDay == false">{{SelectedEvent.time_start | date: 'shortTime'}}</span>
+                    <span style="padding-left: 10px;" ng-show="SelectedEvent.allDay == true">All Day</span>
+                </div>
+                <div class="row" ng-show="SelectedEvent.allDay == false">
+                    <label><b>Time End:</b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.time_end | date: 'shortTime'}}</span>
+                </div>
+                <div class="row">
+                    <label><b>Notes: </b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.description}}</span>
+                </div>
+                <div class="row" ng-hide="SelectedEvent.event_type === 'event'">
+                    <label><b>{{SelectedEvent.event_type}}: </b></label>
+                    <span style="padding-left: 10px;">{{SelectedEvent.amount}}</span>
+                </div>
+                <button type="button" class="btn btn-success" ng-click="deleteEvent(SelectedEvent.event_id)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,53 @@
+<div ng-include src="'partials/navigation.html'"></div>
+<div class="content">
+<div class="container">
+<h4>Update Profile</h4>
+<hr>
+<div class="row">
+    <div class="col-md-3"></div>
+    <!-- edit form column -->
+    <div class="col-md-9 personal-info">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">First name :</label>
+                <div class="col-lg-8">
+                    <input class="form-control" type="text" ng-model="user.first_name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Last name :</label>
+                <div class="col-lg-8">
+                    <input class="form-control" type="text" ng-model="user.last_name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Email :</label>
+                <div class="col-lg-8">
+                    <input class="form-control" type="text" ng-model="user.email_address">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Password :</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="password" ng-model="changedPass">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-8">
+                    <input type="submit" class="btn btn-success" ng-click="update()">
+                    <span></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<hr>
+</div>
+<footer class="py-5 bg-dark">
+<div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; My Planner 2018</p>
+</div>
+<!-- /.container -->
+</footer>
