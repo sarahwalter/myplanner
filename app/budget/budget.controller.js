@@ -44,7 +44,7 @@ angular.module('myApp.budget', ['ngRoute', 'ngMaterial'])
             prepareEventsArray($scope.expenseEvents);
             $scope.totalIncome = getTotal($scope.incomeEvents);
             $scope.totalExpenses = getTotal($scope.expenseEvents);
-            $scope.unallocated = $scope.totalIncome - $scope.totalExpenses;
+            $scope.unallocated = ($scope.totalIncome - $scope.totalExpenses).toFixed(2);
         };
 
         /*******************************************************************************
