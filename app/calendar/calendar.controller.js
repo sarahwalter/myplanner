@@ -48,7 +48,6 @@ angular.module('myApp.calendar', ['ngRoute'])
         $http.get('/calendar_events/user/'+ userID, null).then(function (response) {
             $scope.events.splice(0, $scope.events.length);
             let rawEvents = response.data;
-
             //Only jump into this if-block on the initial page load ...
             if (!$scope.calledOnce) {
                 $scope.calledOnce = true;
@@ -58,7 +57,6 @@ angular.module('myApp.calendar', ['ngRoute'])
                 $window.addEventListener("DOMContentLoaded", $scope.increase());
                 $window.addEventListener("DOMContentLoaded", $scope.decrease());
             }
-            console.log($scope.selectedDate);
             prepareEventsArray(rawEvents);
             rawEvents.forEach(function(event) {
                 /* Timezone fix for date */
@@ -67,14 +65,14 @@ angular.module('myApp.calendar', ['ngRoute'])
                 let dateEnd = (event.end_datetime) ? new Date(event.end_datetime) : dateStart;
                 if (!event.end_datetime) { event.isFullDay = "true"; }
                 let userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
-
+                let fullDay = event.isFullDay;
                 $scope.events.push({
                     event_id : event.event_id,
                     title: event.title,
                     description: event.notes,
                     start: new Date(dateStart.getTime() + userTimezoneOffset),
                     end: new Date(dateEnd.getTime() + userTimezoneOffset),
-                    allDay : (event.isFullDay === "true"),
+                    allDay : fullDay,
                     stick: true
                 });
             });
@@ -250,6 +248,7 @@ angular.module('myApp.calendar', ['ngRoute'])
             && tmpDate <= new Date(event.rep_stop_date)) {
                 let tmpEvent = Object.assign({}, event); //Cloning object so it doesn't alter existing ones
                 tmpEvent.start_datetime = tmpDate.getFullYear() + "-" + (tmpDate.getMonth()+1) + "-" + tmpDate.getDate();
+                tmpEvent.end_datetime = tmpDate.getFullYear() + "-" + (tmpDate.getMonth()+1) + "-" + tmpDate.getDate();
                 eventStorage.push(tmpEvent);
             }
             tmpDate.setDate(tmpDate.getDate()+1);
