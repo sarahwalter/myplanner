@@ -20,6 +20,14 @@
         <th>#</th>
         <th>Job Title</th>
         <th>Pay Rate</th>
+        <th>Frequency</th>
+        <th>Filing</th>
+        <th>Allowances</th>
+        <th>Retirement</th>
+        <th>Pretax</th>
+        <th>Posttax</th>
+        <th>Fed_tax_rate</th>
+        <th>Loc_tax_rate</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -27,17 +35,30 @@
 
 
    
-    <tr *ngFor="let col of records">
-        <td>{{col.id}}</td>
+    <tr ng-repeat="col in records">
+        <td>{{col.job_id}}</td>
         <td>{{col.title}}</td>
-        <td>${{col.payrate}}</td>
+        <td>${{col.wage}}</td>
+        <th>{{col.frequency}}</th>
+        <th>{{col.filing_status}}</th>
+        <th>{{col.allowances}}</th>
+        <th>{{col.retirement_percent}}</th>
+        <th>{{col.pretax_static}}</th>
+        <th>{{col.posttax_static}}</th>
+        <th>{{col.fed_tax_rate}}</th>
+        <th>{{col.loc_tax_rate}}</th>
+
+
+
+      
         <td>
             
-                <a href="" data-toggle="modal" data-target="#updateModalCenter" href="javascript:void(0)" rel="{{col.title}}#sep#{{col.payrate}}#sep#{{col.id}}" onclick="setUpdateParam(this)">
+                <a href="" data-toggle="modal" data-target="#updateModalCenter" href="javascript:void(0)" rel="{{col.title}}#sep#{{col.wage}}#sep#{{col.frequency}}#sep#{{col.filing_status}}#sep#{{col.allowances}}#sep#{{col.retirement_percent}}#sep#{{col.pretax_static}}#sep#{{col.posttax_static}}#sep#{{col.fed_tax_rate}}#sep#{{col.loc_tax_rate}}#sep#{{col.job_id}}"
+                onclick="setUpdateParam(this)">
                         <span class="badge badge-success"><i class="fa fa-edit"></i> Edit</span>
                     </a>
                    &nbsp;&nbsp;
-                    <a  (click)= "deleten(col.id)" >
+                    <a  ng-click= "deleten(col.job_id)" >
                             <span class="badge badge-danger"><i class="fa fa-trash"></i> Delete</span>
                  </a>
 
@@ -53,6 +74,14 @@
         <th>#</th>
         <th>Job Title</th>
         <th>Pay Rate</th>
+        <th>Frequency</th>
+        <th>Filing</th>
+        <th>Allowances</th>
+        <th>Retirement</th>
+        <th>Pretax</th>
+        <th>Posttax</th>
+        <th>Fed_tax_rate</th>
+        <th>Loc_tax_rate</th>
         <th>Action</th>
     </tr>
     </tfoot>
@@ -65,13 +94,12 @@
 </div>
 <!-- /.container -->
 
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-<div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; My Planner 2018</p>
-</div>
-<!-- /.container -->
-</footer>
+<footer class="py-2 " style="background-color:black; width:100%;position: absolute;bottom: 0%;left: 0%;">
+        <div class="container" style="background-color:black">
+            <p class="m-0 text-center text-white">Copyright &copy; My Planner 2018</p>
+        </div>
+        <!-- /.container -->
+    </footer>
 
 
 
@@ -87,7 +115,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form role="form"  method="post" (submit) = "addjobs($event)">
+        <form role="form"  method="post" ng-submit = "addjobs($event)">
         <div class="modal-body">
                 <div class="form-group">
                     <label>Job Title :</label>
@@ -99,6 +127,56 @@
                     <input type="number" class="form-control"
                            id="add-pay-rate" placeholder="Pay Rate" name="payrate" required/>
                 </div>
+
+                <div class="form-group">
+                    <label>Frequency :</label>
+                    <input type="number" class="form-control"
+                           id="add-pay-frequency" placeholder="Frequency" name="frequency" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Filing:</label>
+                    <input type="number" class="form-control"
+                           id="add-pay-filling" placeholder="Filing" name="filing" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Allowances:</label>
+                    <input type="number" class="form-control"
+                           id="add-pay-allowences" placeholder="Allowances" name="allowances" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Retirement:</label>
+                    <input type="number" class="form-control"
+                           id="add-pay-retirement" placeholder="retirement" name="retirement" required/>
+                </div>
+               
+                <div class="form-group">
+                    <label>Pretax:</label>
+                    <input type="number" class="form-control"
+                           id="add-pay-pretax" placeholder="pretax" name="pretax" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Posttax:</label>
+                    <input type="number" class="form-control"
+                           id="add-pay-posttax" placeholder="posttax" name="posttax" required/>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Fed Tax Rate:</label>
+                    <input type="number" class="form-control"
+                           id="add-pay-fed-tax-rate" placeholder="fed-tax-rate" name="fed-tax-rate" required/>
+                
+                
+                    <label>Loc Tax Rate:</label>
+                    <input type="number" class="form-control"
+                            id="add-pay-loc-tax-rate" placeholder="loc-tax-rate" name="loc-tax-rate" required/>
+                
+              </div>
+           
         </div>
 
         <div class="modal-footer">
@@ -126,18 +204,66 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form role="form" method="post" (submit)="upjob($event)">
+        <form role="form" method="post" ng-submit="upjob($event)">
         <div class="modal-body">
-                <div class="form-group">
-                    <label>Job Title :</label>
-                    <input type="text" class="form-control"
-                           id="up-job-title" placeholder="Job Title" name="title" required />
-                </div>
-                <div class="form-group">
-                    <label>Pay Rate :</label>
-                    <input type="number" class="form-control"
-                           id="up-pay-rate" placeholder="Pay Rate" name="payrate" required />
-                </div>
+            <div class="form-group">
+                <label>Job Title :</label>
+                <input type="text" class="form-control"
+                       id="up-job-title" placeholder="Job Title" name="title" required/>
+            </div>
+            <div class="form-group">
+                <label>Pay Rate :</label>
+                <input type="number" class="form-control"
+                       id="up-pay-rate" placeholder="Pay Rate" name="payrate" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Frequency :</label>
+                <input type="text" class="form-control"
+                       id="up-pay-frequency" placeholder="Frequency" name="frequency" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Filing:</label>
+                <input type="text" class="form-control"
+                       id="up-pay-filling" placeholder="Filing" name="filing" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Allowances:</label>
+                <input type="number" class="form-control"
+                       id="up-pay-allowences" placeholder="Allowances" name="allowances" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Retirement:</label>
+                <input type="number" class="form-control"
+                       id="up-pay-retirement" placeholder="retirement" name="retirement" required/>
+            </div>
+           
+            <div class="form-group">
+                <label>Pretax:</label>
+                <input type="number" class="form-control"
+                       id="up-pay-pretax" placeholder="pretax" name="pretax" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Posttax:</label>
+                <input type="number" class="form-control"
+                       id="up-pay-posttax" placeholder="posttax" name="posttax" required/>
+            </div>
+
+
+            <div class="form-group">
+                <label>Fed Tax Rate:</label>
+                <input type="number" class="form-control"
+                       id="up-pay-fed-tax-rate" placeholder="fed-tax-rate" name="fed-tax-rate" required/>
+            
+            
+                <label>Loc Tax Rate:</label>
+                <input type="number" class="form-control"
+                        id="up-pay-loc-tax-rate" placeholder="loc-tax-rate" name="loc-tax-rate" required/>
+            
                 <input type="hidden" name="jobid" value="0" id="up-job-id" />
         </div>
 
