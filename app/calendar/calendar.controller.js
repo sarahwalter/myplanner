@@ -82,7 +82,7 @@ angular.module('myApp.calendar', ['ngRoute'])
     //Configure the Calendar
     $scope.uiConfig = {
         calendar : {
-            height: 450,
+            height: 550,
             editable: true,
             displayEventTime: false,
 
