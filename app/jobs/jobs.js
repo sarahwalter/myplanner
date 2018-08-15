@@ -11,13 +11,12 @@ angular.module('myApp.jobs', ['ngRoute'])
 
 .controller('JobsCtrl', ['$http', '$scope', '$rootScope', '$location', function($http, $scope, $rootScope, $location) {
      if(!$rootScope.globals.currentUser){$location.path('/login')}
-     
+     let user_id = $rootScope.globals.currentUser.user_id;
      $.ready(
       getjobs()
      );
 
      $scope.deleten =  function(id) {
-
       console.log(id);
       if (window.confirm('Do you realy want to delete this job ?')) {
 
@@ -30,10 +29,8 @@ angular.module('myApp.jobs', ['ngRoute'])
                    loadjobagain();
     
               });
-      
       }
-
-    }
+    };
 
      $scope.upjob = function(event){
 
@@ -63,7 +60,7 @@ angular.module('myApp.jobs', ['ngRoute'])
                     "fed_tax_rate":fedtax,
                     "loc_tax_rate":loctax,
                     "job_id":id,
-                    } 
+                    }
           ).then(function successful(response){
             /* If successful */
             /* Create global variable for currentUser */
@@ -80,8 +77,7 @@ angular.module('myApp.jobs', ['ngRoute'])
             loadjobagain();
       
         });
-
-     }
+     };
       
       $scope.addjobs = function(event){
           event.preventDefault();
@@ -125,43 +121,64 @@ angular.module('myApp.jobs', ['ngRoute'])
               loadjobagain();
         
           });
-
-    }
+        };
       
       function loadjobagain() {
         $location.path('/jobs')
         window.location.reload();
        }
 
-
-
        function getjobs() {
 
-        return $http.post('/alljobs', {"user_id":$rootScope.globals.currentUser.user_id} )
-                    .then(function successful(response){
-                      /* If successful */
-                      /* Create global variable for currentUser */
-                    $scope.records =  response.data;
-                      //$scope.users
-                  }, function failure(response){
-                      console.log(response);
-                      window.alert('Error Retrieving  Jobs');
-                  });
+        $http.get('/jobs/' + user_id).then(function (response){
+            if (response.status !== 200){
+                console.log(response);
+                window.alert('Error Retrieving  Jobs');
+            } else { $scope.records =  response.data; }
+        });
       }
     
-      function  deletejob(id) {
-    
+      function deletejob(id) {
         const t = '/api/deletejob/' + id;
         console.log(t);
         return this.http.get(t);
-    
       }
-    
-     
-    
-      function  updatesinglejob(title, payrate, jobid) {
-    
-        return $http.post('/api/updatejob', {title, payrate, jobid});
+
+      function updatesinglejob(event) {
+          event.preventDefault();
+          const target = event.target;
+          const title = target.querySelector('#up-job-title').value ;
+          const payrate = target.querySelector('#up-pay-rate').value ;
+          const frequnecy = target.querySelector('#up-pay-frequency').value ;
+          const filling = target.querySelector('#up-pay-filling').value ;
+          const allowences = target.querySelector('#up-pay-allowences').value ;
+          const retirement = target.querySelector('#up-pay-retirement').value ;
+          const pretax = target.querySelector('#up-pay-pretax').value ;
+          const posttax = target.querySelector('#up-pay-posttax').value ;
+          const fedtax = target.querySelector('#up-pay-fed-tax-rate').value ;
+          const loctax = target.querySelector('#up-pay-loc-tax-rate').value ;
+          const id = target.querySelector('#up-job-id').value ;
+          $http.post('/updatejobs',
+              {
+                  "user_id":$rootScope.globals.currentUser.user_id, title,
+                  "wage":payrate,
+                  "frequency":frequnecy,
+                  "filing":filling,
+                  "allowances":allowences,
+                  "retirement":retirement,
+                  "pretax":pretax,
+                  "posttax":posttax,
+                  "fed_tax_rate":fedtax,
+                  "loc_tax_rate":loctax,
+                  "job_id":id,
+              }).then(function(response){
+                  if (response.status !== 204){
+                      console.log(response);
+                      window.alert('Error Updating Job');
+                  } else {
+                      window.alert('Job Updated Successfully');
+                  }
+          })
       }
  
 }]);

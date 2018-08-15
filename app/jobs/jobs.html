@@ -17,7 +17,7 @@
 <table id="example" class="table table-striped table-bordered" style="width:100%">
     <thead>
     <tr>
-        <th>#</th>
+        <th hidden="hidden">#</th>
         <th>Job Title</th>
         <th>Pay Rate</th>
         <th>Frequency</th>
@@ -32,11 +32,9 @@
     </tr>
     </thead>
      <tbody>
-
-
-   
+     
     <tr ng-repeat="col in records">
-        <td>{{col.job_id}}</td>
+        <td hidden="hidden">{{col.job_id}}</td>
         <td>{{col.title}}</td>
         <td>${{col.wage}}</td>
         <th>{{col.frequency}}</th>
@@ -47,12 +45,7 @@
         <th>{{col.posttax_static}}</th>
         <th>{{col.fed_tax_rate}}</th>
         <th>{{col.loc_tax_rate}}</th>
-
-
-
-      
         <td>
-            
                 <a href="" data-toggle="modal" data-target="#updateModalCenter" href="javascript:void(0)" rel="{{col.title}}#sep#{{col.wage}}#sep#{{col.frequency}}#sep#{{col.filing_status}}#sep#{{col.allowances}}#sep#{{col.retirement_percent}}#sep#{{col.pretax_static}}#sep#{{col.posttax_static}}#sep#{{col.fed_tax_rate}}#sep#{{col.loc_tax_rate}}#sep#{{col.job_id}}"
                 onclick="setUpdateParam(this)">
                         <span class="badge badge-success"><i class="fa fa-edit"></i> Edit</span>
@@ -61,30 +54,9 @@
                     <a  ng-click= "deleten(col.job_id)" >
                             <span class="badge badge-danger"><i class="fa fa-trash"></i> Delete</span>
                  </a>
-
         </td>
     </tr>
-   
-
-
     </tbody>
-
-    <tfoot>
-    <tr>
-        <th>#</th>
-        <th>Job Title</th>
-        <th>Pay Rate</th>
-        <th>Frequency</th>
-        <th>Filing</th>
-        <th>Allowances</th>
-        <th>Retirement</th>
-        <th>Pretax</th>
-        <th>Posttax</th>
-        <th>Fed_tax_rate</th>
-        <th>Loc_tax_rate</th>
-        <th>Action</th>
-    </tr>
-    </tfoot>
 </table> 
 
 
