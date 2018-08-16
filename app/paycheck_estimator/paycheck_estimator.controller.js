@@ -21,7 +21,7 @@ angular.module('myApp.paycheck_estimator', ['ngRoute', 'ngMaterial'])
             let user_id = $rootScope.globals.currentUser.user_id;
     
             //This occurs on instantiation
-            $http.get('/jobs/' + user_id, null).then(function(response){
+            $http.get('/jobs/user/' + user_id, null).then(function(response){
                 $scope.allJobs = response.data;
                 $scope.jobInfo = response.data[0];
                 $scope.formFill();

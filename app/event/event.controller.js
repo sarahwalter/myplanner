@@ -29,7 +29,7 @@ angular.module('myApp.event', ['ngRoute', 'ngMaterial'])
         if ($scope.eventTitle === "") { $scope.errorMessage = "Event title required"; return;}
         if ($scope.rep_day_week === "") { $scope.rep_day_week = null; }
         if ($scope.rep_day_month === "") { $scope.rep_day_month = null; }
-        if ($scope.eventType !== "event") { $scope.all_day = true; }
+        if ($scope.eventType !== "event") { $scope.all_day = true; $scope.endDate = $scope.eventDate; }
         if (new Date($scope.endDate) < new Date($scope.eventDate)) { $scope.endDate = $scope.eventDate; }
         let eventSubmit = {
             user_id: user_id,
