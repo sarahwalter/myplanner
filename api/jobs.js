@@ -66,6 +66,20 @@ exports.jobInfoPerUser = function(req, res){
     });
 };
 
+exports.jobInfoPerJob = function(req, res){
+    let job = req.params.job_id;
+
+    if (!job) { return error.parameterErr(res, "Missing job_id parameter"); }
+
+    mysql.pool.query("SELECT job_id, title, wage, frequency, filing_status, allowances, retirement_percent, pretax_static,"
+        + " posttax_static, fed_tax_rate, loc_tax_rate"
+        + " FROM jobs"
+        + " WHERE job_id = ?", [job], function(err, results){
+        if (err) { return error.sqlErr(res, err); }
+        else { return res.send(results); }
+    });
+};
+
 /***************************************************
  * Name: updateJob
  * Input: Body with all fields of jobs table
@@ -76,7 +90,7 @@ exports.updateJob = function(req, res){
     if (!req.body) { return error.parameterErr(res, "Missing body of request"); }
 
     let j = jobInfoPrepper(req.body);
-
+    console.log(j);
     //Verify the minimum requirements for inserting have been met
     for (let field in j) {
         if (j[field] === null) { return error.parameterErr(res, "Missing required field: " + field); }
@@ -84,7 +98,7 @@ exports.updateJob = function(req, res){
 
     mysql.pool.query("UPDATE jobs"
         + " SET user_id=?, title=?, wage=?, frequency=?, filing_status=?, allowances=?, retirement_percent=?,"
-        + " pretax_static=?, posttax_static=?, fed_tax_rate=?, loc_tax_rate"
+        + " pretax_static=?, posttax_static=?, fed_tax_rate=?, loc_tax_rate=?"
         + " WHERE job_id=?",
         [j.user, j.title, j.wage, j.frequency, j.filing, j.allowances, j.retirement, j.pretax, j.posttax, j.fed_tax_rate, j.loc_tax_rate, j.job], function(err){
             if (err) { return error.sqlErr(res, err); }

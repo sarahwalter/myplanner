@@ -35,9 +35,9 @@ app.patch('/calendar_events', calendar_events.updateEvent);
 //JOBS CALLS
 app.post('/jobs', jobs.createJob);
 app.delete('/jobs/:job_id', jobs.deleteJob);
-app.get('/jobs/:user_id', jobs.jobInfoPerUser);
-app.post('/updatejobs', jobs.updateJob);
-app.post("/alljobs",jobs.allJob);
+app.get('/jobs/user/:user_id', jobs.jobInfoPerUser);
+app.get('/jobs/job/:job_id', jobs.jobInfoPerJob);
+app.patch('/jobs', jobs.updateJob);
 
 //USER CALLS
 app.post('/users', users.authenticateUser);

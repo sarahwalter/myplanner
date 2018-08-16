@@ -22,8 +22,7 @@ angular.module('myApp', [
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/calendar'});
+  $routeProvider.otherwise({redirectTo: '/landing'});
 }]).
 run(['$rootScope', '$location', '$http', '$cookies', function($rootScope, $location, $http, $cookies) {
   $rootScope.globals = $cookies.getObject('globals') || {};
