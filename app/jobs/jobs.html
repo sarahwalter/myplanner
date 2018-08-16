@@ -31,8 +31,7 @@
         <th>Action</th>
     </tr>
     </thead>
-     <tbody>
-     
+    <tbody>
     <tr ng-repeat="col in records">
         <td hidden="hidden">{{col.job_id}}</td>
         <td>{{col.title}}</td>
@@ -46,35 +45,26 @@
         <th>{{col.fed_tax_rate}}</th>
         <th>{{col.loc_tax_rate}}</th>
         <td>
-                <a href="" data-toggle="modal" data-target="#updateModalCenter" href="javascript:void(0)" rel="{{col.title}}#sep#{{col.wage}}#sep#{{col.frequency}}#sep#{{col.filing_status}}#sep#{{col.allowances}}#sep#{{col.retirement_percent}}#sep#{{col.pretax_static}}#sep#{{col.posttax_static}}#sep#{{col.fed_tax_rate}}#sep#{{col.loc_tax_rate}}#sep#{{col.job_id}}"
-                onclick="setUpdateParam(this)">
-                        <span class="badge badge-success"><i class="fa fa-edit"></i> Edit</span>
-                    </a>
-                   &nbsp;&nbsp;
-                    <a  ng-click= "deleten(col.job_id)" >
-                            <span class="badge badge-danger"><i class="fa fa-trash"></i> Delete</span>
-                 </a>
+            <a href="" data-toggle="modal" data-target="#updateModalCenter" href="javascript:void(0)"
+               rel="{{col.title}}#sep#{{col.wage}}#sep#{{col.frequency}}#sep#{{col.filing_status}}#sep#{{col.allowances}}#sep#{{col.retirement_percent}}#sep#{{col.pretax_static}}#sep#{{col.posttax_static}}#sep#{{col.fed_tax_rate}}#sep#{{col.loc_tax_rate}}#sep#{{col.job_id}}"
+               ng-click="getUpdateInfo(col.job_id)">
+                <span class="badge badge-success"><i class="fa fa-edit"></i> Edit</span>
+            </a>
+            <button class="badge badge-danger" ng-click="deleten(col.job_id)">Delete</button>
         </td>
     </tr>
     </tbody>
 </table> 
 
-
-
-
-
 </div>
 <!-- /.container -->
 
 <footer class="py-2 " style="background-color:black; width:100%;position: absolute;bottom: 0%;left: 0%;">
-        <div class="container" style="background-color:black">
-            <p class="m-0 text-center text-white">Copyright &copy; My Planner 2018</p>
-        </div>
-        <!-- /.container -->
-    </footer>
-
-
-
+    <div class="container" style="background-color:black">
+        <p class="m-0 text-center text-white">Copyright &copy; My Planner 2018</p>
+    </div>
+    <!-- /.container -->
+</footer>
 
 <!-- Add Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -101,15 +91,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Frequency :</label>
-                    <input type="number" class="form-control"
-                           id="add-pay-frequency" placeholder="Frequency" name="frequency" required/>
+                    <label for="add-pay-frequency">Frequency :</label>
+                    <select id="add-pay-frequency" class="form-control" required>
+                        <option ng-repeat="freq in frequencyTypes">{{freq}}</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label>Filing:</label>
-                    <input type="number" class="form-control"
-                           id="add-pay-filling" placeholder="Filing" name="filing" required/>
+                    <select id="add-pay-filling" class="form-control" required>
+                        <option ng-repeat="filing in filingTypes">{{filing}}</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -176,76 +168,76 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form role="form" method="post" ng-submit="upjob($event)">
+        <form role="form">
         <div class="modal-body">
+            <div>
+                <label>Job ID</label>
+                <input id="up-job-id" disabled="disabled" class="form-control" value="{{update_jobID}}">
+            </div>
             <div class="form-group">
                 <label>Job Title :</label>
-                <input type="text" class="form-control"
-                       id="up-job-title" placeholder="Job Title" name="title" required/>
+                <input class="form-control"
+                       id="up-job-title" placeholder="Job Title" name="title" value="{{update_jobTitle}}" required/>
             </div>
             <div class="form-group">
                 <label>Pay Rate :</label>
-                <input type="number" class="form-control"
-                       id="up-pay-rate" placeholder="Pay Rate" name="payrate" required/>
+                <input class="form-control"
+                       id="up-pay-rate" placeholder="Pay Rate" name="payrate" value="{{update_payRate}}" required/>
             </div>
 
             <div class="form-group">
-                <label>Frequency :</label>
-                <input type="text" class="form-control"
-                       id="up-pay-frequency" placeholder="Frequency" name="frequency" required/>
+                <label for="up-pay-frequency">Frequency :</label>
+                <select id="up-pay-frequency" class="form-control" ng-model="update_frequency" required>
+                    <option ng-repeat="freq in frequencyTypes">{{freq}}</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label>Filing:</label>
-                <input type="text" class="form-control"
-                       id="up-pay-filling" placeholder="Filing" name="filing" required/>
+                <label for="up-pay-filling">Filing:</label>
+                <select id="up-pay-filling" class="form-control" ng-model="update_filing" required>
+                    <option ng-repeat="filing in filingTypes">{{filing}}</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label>Allowances:</label>
-                <input type="number" class="form-control"
-                       id="up-pay-allowences" placeholder="Allowances" name="allowances" required/>
+                <input class="form-control"
+                       id="up-pay-allowences" placeholder="Allowances" name="allowances" value="{{update_allowances}}" required/>
             </div>
 
             <div class="form-group">
                 <label>Retirement:</label>
-                <input type="number" class="form-control"
-                       id="up-pay-retirement" placeholder="retirement" name="retirement" required/>
+                <input class="form-control"
+                       id="up-pay-retirement" placeholder="retirement" name="retirement" value="{{update_retirement}}" required/>
             </div>
            
             <div class="form-group">
                 <label>Pretax:</label>
-                <input type="number" class="form-control"
-                       id="up-pay-pretax" placeholder="pretax" name="pretax" required/>
+                <input class="form-control"
+                       id="up-pay-pretax" placeholder="pretax" name="pretax" value="{{update_preTax}}" required/>
             </div>
 
             <div class="form-group">
                 <label>Posttax:</label>
-                <input type="number" class="form-control"
-                       id="up-pay-posttax" placeholder="posttax" name="posttax" required/>
+                <input class="form-control"
+                       id="up-pay-posttax" placeholder="posttax" name="posttax" value="{{update_postTax}}" required/>
             </div>
 
 
             <div class="form-group">
                 <label>Fed Tax Rate:</label>
-                <input type="number" class="form-control"
-                       id="up-pay-fed-tax-rate" placeholder="fed-tax-rate" name="fed-tax-rate" required/>
+                <input class="form-control"
+                       id="up-pay-fed-tax-rate" placeholder="fed-tax-rate" name="fed-tax-rate" value="{{update_fedTaxes}}" required/>
             
             
                 <label>Loc Tax Rate:</label>
-                <input type="number" class="form-control"
-                        id="up-pay-loc-tax-rate" placeholder="loc-tax-rate" name="loc-tax-rate" required/>
-            
-                <input type="hidden" name="jobid" value="0" id="up-job-id" />
+                <input class="form-control"
+                        id="up-pay-loc-tax-rate" placeholder="loc-tax-rate" name="loc-tax-rate" value="{{update_localTaxes}}" required/>
         </div>
 
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success" id="btn-update">
-                <i class="fa fa-edit"></i> Update
-            </button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">
-                <i class="fa fa-close"></i> Cancel
-            </button>
+            <button class="btn btn-success" id="btn-update" ng-click="updatesinglejob($event)"><i class="fa fa-edit"></i>Update</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
         </div>
         </form>
 
