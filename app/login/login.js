@@ -43,8 +43,8 @@ angular.module('myApp.login', ['ngRoute'])
                         cookieExp.setDate(cookieExp.getDate() + 7);
                         $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
                         
-                        /* Redirect to landing page */
-                        $location.path('/');
+                        /* Redirect to calendar page */
+                        $location.path('/calendar');
                         
                         }, function failure(response){
                             /* If not successful */
