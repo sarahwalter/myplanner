@@ -54,7 +54,7 @@ angular.module('myApp.event_edit', ['ngRoute', 'ngMaterial'])
         };
         console.log(eventSubmit);
         $http.patch('/calendar_events', eventSubmit, null).then(function successful(response) {
-            if (response.status !== 201) { $scope.errorMessage = response.data; } //If unsuccessful server returns error, display message
+            if (response.status !== 204) { $scope.errorMessage = response.data; } //If unsuccessful server returns error, display message
             else { $location.path('/calendar'); } // If successful redirect to calendar page
         });
     };
