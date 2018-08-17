@@ -64,9 +64,10 @@ angular.module('myApp.calendar', ['ngRoute'])
                 let dateStart = event.start_datetime;
                 let timeStart = new Date(dateStart).getTime();
                 let dateEnd = (event.end_datetime) ? event.end_datetime : dateStart;
-                let timeEnd = (event.isFullDay) ? null : new Date(dateEnd).getTime()
+                let timeEnd = (event.isFullDay) ? null : new Date(dateEnd).getTime();
                 //let userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
                 let fullDay = event.isFullDay;
+                let repeats = (event.rep_day_week || event.rep_day_month) ? true : false;
                 $scope.events.push({
                     event_id : event.event_id,
                     title: event.title,
@@ -80,7 +81,8 @@ angular.module('myApp.calendar', ['ngRoute'])
                     date_end: dateEnd,
                     time_end: timeEnd,
                     event_type: event.event_type,
-                    amount: event.amount
+                    amount: event.amount,
+                    repeats: repeats
                 });
             });
         });
