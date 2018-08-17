@@ -92,15 +92,6 @@ angular.module('myApp.calendar', ['ngRoute'])
             height: 550,
             editable: true,
             displayEventTime: false,
-
-            /*customButtons: {
-                addEvent: {
-                text: '+',
-                click: function() {
-                    $location.path('/eventForm');
-                    }
-                }
-             },*/
             header: {
                 left: 'month agendaWeek agendaDay',
                 center: 'title',
@@ -109,12 +100,6 @@ angular.module('myApp.calendar', ['ngRoute'])
             eventClick: function (event) {
                 $scope.SelectedEvent = event;
             },
-            /*eventAfterAllRender: function () {
-                if ($scope.events.length > 0 && isFirstTime) {
-                    //Focus first event
-                    uiCalendarConfig.calendars.myCalendar.fullCalendar('gotoDate', $scope.events[0].start);
-                }
-            }*/
         }
     };
 
@@ -126,6 +111,10 @@ angular.module('myApp.calendar', ['ngRoute'])
                     /* Redirect to view1 page */
                     $route.reload();
         });
+    };
+
+    $scope.editEvent = function(event_id){
+        $location.path('/eventForm/' + event_id);
     };
 
     $scope.changeSelectedViewType = function(){

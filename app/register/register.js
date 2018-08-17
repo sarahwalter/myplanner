@@ -46,7 +46,7 @@ angular.module('myApp.register', ['ngRoute'])
                 $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
                 
                 /* Redirect to landing page */
-                $location.path('/');
+                $location.path('/calendar');
                 }, function failure(response){
                     /* If server returns error, display message */
                     $scope.errorMessage = response.data;
