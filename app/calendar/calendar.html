@@ -36,7 +36,8 @@
                     <label><b>{{SelectedEvent.event_type}}: </b></label>
                     <span style="padding-left: 10px;">{{SelectedEvent.amount}}</span>
                 </div>
-                <button type="button" class="btn btn-success" ng-click="deleteEvent(SelectedEvent.event_id)">Delete</button>
+                <button type="button" class="btn btn-danger" ng-click="deleteEvent(SelectedEvent.event_id)">{{SelectedEvent.repeats === true ? 'Delete Series' : 'Delete'}}</button>
+                <button type="button" class="btn btn-primary" ng-click="editEvent(SelectedEvent.event_id)">Edit</button>
             </div>
         </div>
     </div>

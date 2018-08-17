@@ -37,3 +37,17 @@
      margin-top:180px;
     }
  }
+
+.carousel-item {
+  height: 80vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.carousel-caption {
+  font-size: 1.75rem;
+}

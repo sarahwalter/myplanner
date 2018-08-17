@@ -64,9 +64,10 @@ angular.module('myApp.calendar', ['ngRoute'])
                 let dateStart = event.start_datetime;
                 let timeStart = new Date(dateStart).getTime();
                 let dateEnd = (event.end_datetime) ? event.end_datetime : dateStart;
-                let timeEnd = (event.isFullDay) ? null : new Date(dateEnd).getTime()
+                let timeEnd = (event.isFullDay) ? null : new Date(dateEnd).getTime();
                 //let userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
                 let fullDay = event.isFullDay;
+                let repeats = (event.rep_day_week || event.rep_day_month) ? true : false;
                 $scope.events.push({
                     event_id : event.event_id,
                     title: event.title,
@@ -80,7 +81,8 @@ angular.module('myApp.calendar', ['ngRoute'])
                     date_end: dateEnd,
                     time_end: timeEnd,
                     event_type: event.event_type,
-                    amount: event.amount
+                    amount: event.amount,
+                    repeats: repeats
                 });
             });
         });
@@ -92,15 +94,6 @@ angular.module('myApp.calendar', ['ngRoute'])
             height: 550,
             editable: true,
             displayEventTime: false,
-
-            /*customButtons: {
-                addEvent: {
-                text: '+',
-                click: function() {
-                    $location.path('/eventForm');
-                    }
-                }
-             },*/
             header: {
                 left: 'month agendaWeek agendaDay',
                 center: 'title',
@@ -109,12 +102,6 @@ angular.module('myApp.calendar', ['ngRoute'])
             eventClick: function (event) {
                 $scope.SelectedEvent = event;
             },
-            /*eventAfterAllRender: function () {
-                if ($scope.events.length > 0 && isFirstTime) {
-                    //Focus first event
-                    uiCalendarConfig.calendars.myCalendar.fullCalendar('gotoDate', $scope.events[0].start);
-                }
-            }*/
         }
     };
 
@@ -126,6 +113,10 @@ angular.module('myApp.calendar', ['ngRoute'])
                     /* Redirect to view1 page */
                     $route.reload();
         });
+    };
+
+    $scope.editEvent = function(event_id){
+        $location.path('/eventForm/' + event_id);
     };
 
     $scope.changeSelectedViewType = function(){

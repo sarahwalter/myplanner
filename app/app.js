@@ -18,12 +18,12 @@ angular.module('myApp', [
   'myApp.paycheck_estimator',
   'ui.calendar',
   'myApp.event',
-  'myApp.jobs'
+  'myApp.jobs',
+  'myApp.event_edit'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/calendar'});
+  $routeProvider.otherwise({redirectTo: '/landing'});
 }]).
 run(['$rootScope', '$location', '$http', '$cookies', function($rootScope, $location, $http, $cookies) {
   $rootScope.globals = $cookies.getObject('globals') || {};
