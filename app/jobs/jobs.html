@@ -20,6 +20,14 @@
         <th hidden="hidden">#</th>
         <th>Job Title</th>
         <th>Pay Rate</th>
+        <th>Frequency</th>
+        <th>Filing</th>
+        <th>Allowances</th>
+        <th>Retirement</th>
+        <th>Pretax</th>
+        <th>Posttax</th>
+        <th>Fed_tax_rate</th>
+        <th>Loc_tax_rate</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -28,6 +36,14 @@
         <td hidden="hidden">{{col.job_id}}</td>
         <td>{{col.title}}</td>
         <td>${{col.wage}}</td>
+        <th>{{col.frequency}}</th>
+        <th>{{col.filing_status}}</th>
+        <th>{{col.allowances}}</th>
+        <th>{{col.retirement_percent}}</th>
+        <th>{{col.pretax_static}}</th>
+        <th>{{col.posttax_static}}</th>
+        <th>{{col.fed_tax_rate}}</th>
+        <th>{{col.loc_tax_rate}}</th>
         <td>
             <a href="" data-toggle="modal" data-target="#updateModalCenter" href="javascript:void(0)"
                rel="{{col.title}}#sep#{{col.wage}}#sep#{{col.frequency}}#sep#{{col.filing_status}}#sep#{{col.allowances}}#sep#{{col.retirement_percent}}#sep#{{col.pretax_static}}#sep#{{col.posttax_static}}#sep#{{col.fed_tax_rate}}#sep#{{col.loc_tax_rate}}#sep#{{col.job_id}}"
@@ -229,7 +245,3 @@
 </div>
 </div>
 </div>
-
-
-
-
