@@ -5,11 +5,11 @@ angular.module('myApp.event_edit', ['ngRoute', 'ngMaterial'])
 .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/eventForm/:id', {
         templateUrl: 'event/eventEditForm.html',
-        controller: 'EventCtrl'
+        controller: 'EventEditCtrl'
     });
 }])
 
-.controller('EventCtrl', ['$http', '$scope', '$rootScope', '$location', '$window', '$route', '$routeParams', function($http, $scope, $rootScope, $location, $route, $routeParams) {
+.controller('EventEditCtrl', ['$http', '$scope', '$rootScope', '$location', '$window', '$route', '$routeParams', function($http, $scope, $rootScope, $location, $route, $routeParams) {
     if(!$rootScope.globals.currentUser){$location.path('/login')}
     let user_id = $rootScope.globals.currentUser.user_id;
     $scope.id = $routeParams.current.params.id;
